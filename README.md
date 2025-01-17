@@ -1,1 +1,4 @@
 # reciepe-app
+
+- Backend
+- Frontend
