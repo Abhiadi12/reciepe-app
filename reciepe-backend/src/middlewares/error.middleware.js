@@ -4,7 +4,7 @@ const BaseError = require("../error/base.error");
 const createResponse = require("../utils/createResponse");
 
 function errorHandler(error, req, res, next) {
-  console.error("----------", error);
+  console.error(error);
   if (error instanceof BaseError) {
     return res
       .status(error.statusCode)
