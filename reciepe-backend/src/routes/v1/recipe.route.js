@@ -38,6 +38,6 @@ recipeRouter.put(
   decodeToken,
   v1RecipeController.updateRecipe
 );
-recipeRouter.delete("/:id", v1RecipeController.deleteRecipe);
+recipeRouter.delete("/:id", decodeToken, v1RecipeController.deleteRecipe);
 
 module.exports = recipeRouter;

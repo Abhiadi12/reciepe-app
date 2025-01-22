@@ -4,7 +4,7 @@ const recipeSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   ingredients: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Ingredient", required: true },
+    { type: mongoose.Schema.Types.ObjectId, ref: "Ingrident", required: true },
   ], // References Ingredient documents
   steps: { type: [String], required: true }, // Array of preparation steps
   image: {

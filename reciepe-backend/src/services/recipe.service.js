@@ -1,24 +1,19 @@
-const ResourceAlreadyExist = require("../error/resourceExist.error");
+const UnauthorizedError = require("../error/unauthorized.error");
 const NotFound = require("../error/notFound.error");
 const BadRequest = require("../error/badRequest.error");
+const removeFile = require("../utils/removeFile");
 const cloudinary = require("../config/index").cloudinaryConfig;
-
-/**
- * TODO:
- * clodinary upload image
- * cloudinary delete image
- * check user data
- *
- */
 
 class RecipeService {
   constructor(recipeRepository) {
     this.recipeRepository = recipeRepository;
   }
 
-  async uploadImage(file) {
+  async uploadImage(file, folder = "recipe") {
     try {
-      const result = await cloudinary.uploader.upload(file.path);
+      const result = await cloudinary.uploader.upload(file.path, {
+        folder,
+      });
       console.log(result);
       return result;
     } catch (error) {
@@ -32,6 +27,18 @@ class RecipeService {
     }
   }
 
+  checkRecipeExist(recipe) {
+    if (!recipe) {
+      throw new NotFound("Recipe");
+    }
+  }
+
+  checkAuthorization(recipe, userId) {
+    if (recipe.createdBy?._id?.toString() !== userId) {
+      throw new Unauthorized();
+    }
+  }
+
   async getRecipes() {
     try {
       const recipes = await this.recipeRepository.getRecipes();
@@ -41,35 +48,50 @@ class RecipeService {
     }
   }
 
-  async createRecipe(payload, file) {
+  async createRecipe(payload, file, userId) {
     try {
       this.checkFileExist(file);
       const cloudinaryImage = await this.uploadImage(file);
-      const newRecipe = await this.recipeRepository.createRecipe({
+      await this.recipeRepository.createRecipe({
         ...payload,
         image: {
           url: cloudinaryImage.secure_url,
           public_id: cloudinaryImage.public_id,
         },
+        createdBy: userId,
       });
+      removeFile(file.path);
+      return true;
     } catch (error) {
       throw error;
     }
   }
 
-  async deleteRecipeById(id) {
+  async deleteRecipeById(id, userId) {
     try {
-      const recipe = await this.recipeRepository.deleteRecipeById(id);
-      return recipe;
+      //check if recipe exist
+      const recipe = await this.recipeRepository.getRecipeById(id);
+      this.checkRecipeExist(recipe);
+      //check if user is the owner of the recipe
+      this.checkAuthorization(recipe, userId);
+
+      const deleteRecipe = await this.recipeRepository.deleteRecipeById(id);
+      return deleteRecipe;
     } catch (error) {
       throw error;
     }
   }
 
-  async updateRecipeById(id, payload) {
+  async updateRecipeById(id, payload, userId) {
     try {
-      const recipe = await this.recipeRepository.updateRecipeById(id, payload);
-      return recipe;
+      const recipe = await this.recipeRepository.getRecipeById(id);
+      this.checkRecipeExist(recipe);
+      this.checkAuthorization(recipe, userId);
+      const updatedRecipe = await this.recipeRepository.updateRecipeById(
+        id,
+        payload
+      );
+      return updatedRecipe;
     } catch (error) {
       throw error;
     }

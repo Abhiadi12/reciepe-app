@@ -2,7 +2,9 @@ const { Recipe } = require("../models");
 
 class RecipeRepository {
   async getRecipes() {
-    return await Recipe.find();
+    return await Recipe.find()
+      .populate("ingredients")
+      .populate("createdBy", "username");
   }
 
   async createRecipe(payload) {
@@ -34,7 +36,9 @@ class RecipeRepository {
   }
 
   async getRecipeById(id) {
-    return await Recipe.findById(id);
+    return await Recipe.findById(id)
+      .populate("ingredients")
+      .populate("createdBy", "username");
   }
 }
 

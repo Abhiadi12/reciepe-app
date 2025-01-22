@@ -6,7 +6,6 @@ async function decodeToken(req, _, next) {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
-    console.log(token);
     if (!token) {
       next(new UnauthorizedError("Token not found"));
     }

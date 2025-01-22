@@ -22,13 +22,10 @@ async function getRecipes(_, res) {
 async function createRecipe(req, res, next) {
   try {
     logUser(req);
-    console.log("req.body", req.file);
-    const newRecipe = await recipeService.createRecipe(req.body, req.file);
+    await recipeService.createRecipe(req.body, req.file, req.user.id);
     return res
       .status(StatusCodes.CREATED)
-      .json(
-        createResponse(true, "Recipe created successfully", newRecipe, null)
-      );
+      .json(createResponse(true, "Recipe created successfully", null, null));
   } catch (error) {
     next(error);
   }
@@ -37,7 +34,10 @@ async function createRecipe(req, res, next) {
 async function deleteRecipe(req, res, next) {
   try {
     logUser(req);
-    const deletedRecipe = await recipeService.deleteRecipe(req.params.id);
+    const deletedRecipe = await recipeService.deleteRecipeById(
+      req.params.id,
+      req.user.id
+    );
     if (!deletedRecipe) {
       throw new NotFound("Recipe");
     }
@@ -54,9 +54,10 @@ async function deleteRecipe(req, res, next) {
 async function updateRecipe(req, res, next) {
   try {
     logUser(req);
-    const updatedRecipe = await recipeService.updateRecipe(
+    const updatedRecipe = await recipeService.updateRecipeById(
       req.params.id,
-      req.body
+      req.body,
+      req.user.id
     );
     return res
       .status(StatusCodes.OK)
@@ -70,8 +71,7 @@ async function updateRecipe(req, res, next) {
 
 async function getRecipe(req, res, next) {
   try {
-    logUser(req);
-    const recipe = await recipeService.getRecipe(req.params.id);
+    const recipe = await recipeService.getRecipeById(req.params.id);
     if (!recipe) {
       throw new NotFound("Recipe");
     }
