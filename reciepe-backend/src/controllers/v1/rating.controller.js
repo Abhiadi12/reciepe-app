@@ -53,8 +53,23 @@ async function deleteRating(req, res) {
   }
 }
 
+async function getRatingById(req, res, next) {
+  try {
+    const rating = await ratingService.getRatingById(req.params.id);
+
+    console.log("rating", rating);
+    return res
+      .status(StatusCodes.OK)
+      .json(createResponse(true, "Rating fetched successfully", rating, null));
+  } catch (error) {
+    console.log("log...", error);
+    next(error);
+  }
+}
+
 module.exports = {
   createRating,
   updateRating,
   deleteRating,
+  getRatingById,
 };

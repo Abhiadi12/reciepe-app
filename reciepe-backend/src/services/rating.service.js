@@ -1,5 +1,7 @@
 const UnauthorizedError = require("../error/unauthorized.error");
 const NotFound = require("../error/notFound.error");
+const checkValidId = require("../utils/checkValidId");
+const BadRequest = require("../error/badRequest.error");
 
 class RatingService {
   constructor(ratingRepository, recipeRepository) {
@@ -10,6 +12,12 @@ class RatingService {
   isOwnerOfRating(rating, userId) {
     if (rating?.user !== userId) {
       throw new UnauthorizedError();
+    }
+  }
+
+  checkRatingExist(rating) {
+    if (!rating) {
+      throw new NotFound("Rating");
     }
   }
 
@@ -51,6 +59,20 @@ class RatingService {
     try {
       const deletedRating = await this.ratingRepository.deleteRatingById(id);
       return deletedRating;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getRatingById(id) {
+    try {
+      const isvalid = checkValidId(id);
+      if (!isvalid) {
+        throw new BadRequest("Invalid Rating Id");
+      }
+      const rating = await this.ratingRepository.getRatingById(id);
+      this.checkRatingExist(rating);
+      return rating;
     } catch (error) {
       throw error;
     }

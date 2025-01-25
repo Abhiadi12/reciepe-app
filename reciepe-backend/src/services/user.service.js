@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ResourceAlreadyExist = require("../error/resourceExist.error");
 const NotFound = require("../error/notFound.error");
+const checkValidId = require("../utils/checkValidId");
 const { JWT_SECRET } = require("../config/index").serverConfig;
 
 class UserService {
@@ -55,6 +56,10 @@ class UserService {
 
   async getUserProfile(userId) {
     try {
+      const isvalid = checkValidId(userId);
+      if (!isvalid) {
+        throw new BadRequest("Invalid User Id");
+      }
       const user = await this.userRepository.findUserById(userId);
       if (!user) {
         throw new NotFound("User");

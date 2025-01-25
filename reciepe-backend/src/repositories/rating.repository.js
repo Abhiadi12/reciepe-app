@@ -43,6 +43,10 @@ class RatingRepository {
       throw error;
     }
   }
+
+  async getRatingById(id) {
+    return await Rating.findById(id);
+  }
 }
 
 module.exports = RatingRepository;

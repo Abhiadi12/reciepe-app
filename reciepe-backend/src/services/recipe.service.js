@@ -2,6 +2,7 @@ const UnauthorizedError = require("../error/unauthorized.error");
 const NotFound = require("../error/notFound.error");
 const BadRequest = require("../error/badRequest.error");
 const removeFile = require("../utils/removeFile");
+const checkValidId = require("../utils/checkValidId");
 const cloudinary = require("../config/index").cloudinaryConfig;
 
 class RecipeService {
@@ -99,6 +100,10 @@ class RecipeService {
 
   async getRecipeById(id) {
     try {
+      const isvalid = checkValidId(id);
+      if (!isvalid) {
+        throw new BadRequest("Invalid Recipe Id");
+      }
       const recipe = await this.recipeRepository.getRecipeById(id);
       return recipe;
     } catch (error) {
