@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const cloudinary = require("../config/index").cloudinaryConfig;
 
 const recipeSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -17,11 +18,22 @@ const recipeSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Rating" }],
   createdAt: { type: Date, default: Date.now },
 });
 
+// Remove image from cloudinary before removing recipe
+recipeSchema.pre("remove", async function (next) {
+  try {
+    if (this?.image?.public_id) {
+      await cloudinary.uploader.destroy(this.image.public_id);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = mongoose.model("Recipe", recipeSchema);
 
-// ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Rating" }], // References Rating documents
 // comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }], // References Comment documents
 // averageRating: { type: Number, default: 0 }, // Average of all ratings
