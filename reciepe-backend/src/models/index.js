@@ -3,4 +3,5 @@ module.exports = {
   Ingrident: require("./ingrident.modal"),
   Recipe: require("./recipe.modal"),
   Rating: require("./rating.modal"),
+  Comment: require("./comment.modal"),
 };

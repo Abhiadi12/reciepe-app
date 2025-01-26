@@ -3,4 +3,5 @@ module.exports = {
   IngridentRepository: require("./ingrident.repository"),
   RecipeRepository: require("./recipe.repository"),
   RatingRepository: require("./rating.repository"),
+  CommentRepository: require("./comment.repository"),
 };

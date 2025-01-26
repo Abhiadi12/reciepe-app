@@ -3,4 +3,5 @@ module.exports = {
   IngridentService: require("./ingrident.service"),
   RecipeService: require("./recipe.service"),
   RatingService: require("./rating.service"),
+  CommentService: require("./comment.service"),
 };

@@ -3,4 +3,5 @@ module.exports = {
   v1IngridentController: require("./v1/ingrident.controller"),
   v1RecipeController: require("./v1/recipe.controller"),
   v1RatingController: require("./v1/rating.controller"),
+  v1CommentController: require("./v1/comment.controller"),
 };

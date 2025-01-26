@@ -44,7 +44,17 @@ recipeSchema.pre("remove", async function (next) {
   }
 });
 
-module.exports = mongoose.model("Recipe", recipeSchema);
+// Remove all comments before removing recipe
+recipeSchema.pre("remove", async function (next) {
+  try {
+    await mongoose.model("Comment").deleteMany({
+      entityId: this._id,
+      entityType: "Recipe",
+    });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
-// comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }], // References Comment documents
-// averageRating: { type: Number, default: 0 }, // Average of all ratings
+module.exports = mongoose.model("Recipe", recipeSchema);

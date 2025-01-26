@@ -1,6 +1,6 @@
 const ResourceAlreadyExist = require("../error/resourceExist.error");
 
-class IngridentsRepository {
+class IngridentService {
   constructor(ingridentsRepository) {
     this.ingridentsRepository = ingridentsRepository;
   }
@@ -43,4 +43,4 @@ class IngridentsRepository {
   }
 }
 
-module.exports = IngridentsRepository;
+module.exports = IngridentService;
