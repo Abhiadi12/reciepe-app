@@ -33,6 +33,17 @@ recipeSchema.pre("remove", async function (next) {
     next(error);
   }
 });
+
+// Remove all ratings before removing recipe
+recipeSchema.pre("remove", async function (next) {
+  try {
+    await mongoose.model("Rating").deleteMany({ recipe: this._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = mongoose.model("Recipe", recipeSchema);
 
 // comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }], // References Comment documents

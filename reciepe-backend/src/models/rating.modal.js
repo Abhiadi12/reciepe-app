@@ -30,4 +30,15 @@ ratingSchema.post("save", function (error, doc, next) {
   }
 });
 
+// Remove rating from recipe's ratings array after removing rating
+ratingSchema.post("findByIdAndDelete", async function (doc) {
+  try {
+    await mongoose.model("Recipe").findByIdAndUpdate(doc.recipe, {
+      $pull: { ratings: doc._id },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = mongoose.model("Rating", ratingSchema);

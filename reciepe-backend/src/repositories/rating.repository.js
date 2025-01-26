@@ -47,7 +47,11 @@ class RatingRepository {
   }
 
   async getRatingById(id) {
-    return await Rating.findById(id).populate("recipe");
+    return await Rating.findById(id);
+  }
+
+  async getRatingByRecipeAndUser(recipeId, userId) {
+    return await Rating.findOne({ recipe: recipeId, user: userId });
   }
 }
 

@@ -10,7 +10,7 @@ class RatingService {
   }
 
   isOwnerOfRating(rating, userId) {
-    if (rating?.user !== userId) {
+    if (rating?.user?.toString() !== userId) {
       throw new UnauthorizedError();
     }
   }
@@ -31,10 +31,12 @@ class RatingService {
 
   async createRating(payload, userId) {
     try {
-      //is user the owner of the rating
-      this.isOwnerOfRating(payload, userId);
       //is recipe exist
       const recipe = await this.returnSavedRecipe(payload?.recipe);
+      // not allow if recipe user id is the same as the rating user id
+      if (recipe.createdBy?._id?.toString() === userId) {
+        throw new UnauthorizedError();
+      }
       const rating = await this.ratingRepository.createRating(payload);
 
       // Use the DAO to update the recipe by pushing the new rating ID
@@ -49,10 +51,12 @@ class RatingService {
 
   async updateRating(payload, userId) {
     try {
-      //is user the owner of the rating
-      this.isOwnerOfRating(payload, userId);
-      //is recipe exist
-      await this.returnSavedRecipe(payload?.recipe);
+      const rating = await this.ratingRepository.getRatingByRecipeAndUser(
+        payload?.recipe,
+        userId
+      );
+      this.checkRatingExist(rating);
+      this.isOwnerOfRating(rating, userId);
       const updatedRating = await this.ratingRepository.updateRating(payload);
       return updatedRating;
     } catch (error) {
@@ -60,8 +64,16 @@ class RatingService {
     }
   }
 
-  async deleteRatingById(id) {
+  async deleteRatingById(id, userId) {
     try {
+      const isvalid = checkValidId(id);
+      if (!isvalid) {
+        throw new BadRequest("Invalid Rating Id");
+      }
+      const rating = await this.ratingRepository.getRatingById(id);
+      this.checkRatingExist(rating);
+      this.isOwnerOfRating(rating, userId);
+
       const deletedRating = await this.ratingRepository.deleteRatingById(id);
       return deletedRating;
     } catch (error) {

@@ -39,9 +39,12 @@ async function updateRating(req, res, next) {
   }
 }
 
-async function deleteRating(req, res) {
+async function deleteRating(req, res, next) {
   try {
-    const deletedRating = await ratingService.deleteRatingById(req.params.id);
+    const deletedRating = await ratingService.deleteRatingById(
+      req.params.id,
+      req.user.id
+    );
     return res
       .status(StatusCodes.OK)
       .json(
