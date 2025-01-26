@@ -40,6 +40,12 @@ class RecipeService {
     }
   }
 
+  checkValidObjectId(id, message) {
+    if (!checkValidId(id)) {
+      throw new BadRequest(message);
+    }
+  }
+
   async getRecipes() {
     try {
       const recipes = await this.recipeRepository.getRecipes();
@@ -100,12 +106,23 @@ class RecipeService {
 
   async getRecipeById(id) {
     try {
-      const isvalid = checkValidId(id);
-      if (!isvalid) {
-        throw new BadRequest("Invalid Recipe Id");
-      }
+      this.checkValidObjectId(id, "Invalid Recipe Id");
       const recipe = await this.recipeRepository.getRecipeById(id);
       return recipe;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getRecipesByUser(userId, page = 1, limit = 10) {
+    try {
+      this.checkValidObjectId(userId, "Invalid user Id");
+      const recipes = await this.recipeRepository.getRecipesByUser(
+        userId,
+        page,
+        limit
+      );
+      return recipes;
     } catch (error) {
       throw error;
     }

@@ -12,10 +12,10 @@ const ratingService = new RatingService(
 
 async function createRating(req, res, next) {
   try {
-    await ratingService.createRating(req.body, req.user.id);
+    const rating = await ratingService.createRating(req.body, req.user.id);
     return res
       .status(StatusCodes.CREATED)
-      .json(createResponse(true, "Rating created successfully", null, null));
+      .json(createResponse(true, "Rating created successfully", rating, null));
   } catch (error) {
     console.log("log...", error);
     next(error);

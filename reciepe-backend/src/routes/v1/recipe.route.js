@@ -29,7 +29,7 @@ recipeRouter.post(
   decodeToken,
   v1RecipeController.createRecipe
 );
-recipeRouter.get("/:id", v1RecipeController.getRecipe);
+recipeRouter.get("/:id", decodeToken, v1RecipeController.getRecipe);
 recipeRouter.put(
   "/:id",
   upload.single("file"),
@@ -39,5 +39,6 @@ recipeRouter.put(
   v1RecipeController.updateRecipe
 );
 recipeRouter.delete("/:id", decodeToken, v1RecipeController.deleteRecipe);
+recipeRouter.get("/user/:id", decodeToken, v1RecipeController.getRecipesByUser);
 
 module.exports = recipeRouter;

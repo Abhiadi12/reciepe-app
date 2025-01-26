@@ -15,6 +15,12 @@ class UserService {
     });
   }
 
+  checkIdIsValid(id) {
+    if (!checkValidId(id)) {
+      throw new NotFound("User");
+    }
+  }
+
   async signup(payload) {
     try {
       const userExists = await this.userRepository.findUserByEmail(
@@ -54,12 +60,9 @@ class UserService {
     }
   }
 
-  async getUserProfile(userId) {
+  async getProfieInfo(userId) {
     try {
-      const isvalid = checkValidId(userId);
-      if (!isvalid) {
-        throw new BadRequest("Invalid User Id");
-      }
+      this.checkIdIsValid(userId);
       const user = await this.userRepository.findUserById(userId);
       if (!user) {
         throw new NotFound("User");

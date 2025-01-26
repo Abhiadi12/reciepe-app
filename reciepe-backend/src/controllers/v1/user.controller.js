@@ -12,7 +12,6 @@ function ping(_, res) {
 }
 
 async function signup(req, res, next) {
-  //log
   try {
     const user = await userService.signup(req.body);
     return res
@@ -35,7 +34,16 @@ async function signin(req, res, next) {
   }
 }
 
-async function getProfieInfo(req, res, next) {}
+async function getProfieInfo(req, res, next) {
+  try {
+    const user = await userService.getProfieInfo(req.params.id);
+    return res
+      .status(StatusCodes.OK)
+      .json(createResponse(true, "User profile info", user, null));
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
   ping,

@@ -35,8 +35,13 @@ class RatingService {
       this.isOwnerOfRating(payload, userId);
       //is recipe exist
       const recipe = await this.returnSavedRecipe(payload?.recipe);
-      await this.ratingRepository.createRating(payload);
-      return true;
+      const rating = await this.ratingRepository.createRating(payload);
+
+      // Use the DAO to update the recipe by pushing the new rating ID
+      await this.recipeRepository.updateRecipeById(payload?.recipe, {
+        $push: { ratings: rating._id },
+      });
+      return rating;
     } catch (error) {
       throw error;
     }

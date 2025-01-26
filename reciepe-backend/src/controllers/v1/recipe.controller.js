@@ -83,10 +83,29 @@ async function getRecipe(req, res, next) {
   }
 }
 
+async function getRecipesByUser(req, res, next) {
+  try {
+    const { page, limit } = req.query;
+    const recipes = await recipeService.getRecipesByUser(
+      req.params?.id,
+      page,
+      limit
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        createResponse(true, "Recipes fetched successfully", recipes, null)
+      );
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getRecipes,
   createRecipe,
   deleteRecipe,
   updateRecipe,
   getRecipe,
+  getRecipesByUser,
 };

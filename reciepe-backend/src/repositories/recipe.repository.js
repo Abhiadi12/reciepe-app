@@ -37,8 +37,17 @@ class RecipeRepository {
 
   async getRecipeById(id) {
     return await Recipe.findById(id)
+      .populate("ratings")
       .populate("ingredients")
       .populate("createdBy", "username");
+  }
+
+  async getRecipesByUser(userId, page, limit) {
+    return await Recipe.find({ createdBy: userId })
+      .populate("ingredients")
+      .populate("createdBy", "username")
+      .skip((page - 1) * limit)
+      .limit(limit);
   }
 }
 

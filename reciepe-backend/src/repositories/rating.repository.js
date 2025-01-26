@@ -19,8 +19,10 @@ class RatingRepository {
 
   async updateRating(payload) {
     try {
-      const { user, recipe, score, feedback = "" } = payload;
-      //log
+      const { user, recipe, score, feedback } = payload;
+      if (!feedback) {
+        delete payload.feedback;
+      }
       console.log("payload", payload);
       const updatedRating = await Rating.findOneAndUpdate(
         { recipe, user },
@@ -45,7 +47,7 @@ class RatingRepository {
   }
 
   async getRatingById(id) {
-    return await Rating.findById(id);
+    return await Rating.findById(id).populate("recipe");
   }
 }
 
