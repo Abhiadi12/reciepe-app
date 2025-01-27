@@ -41,6 +41,28 @@ async function getRecipeComments(req, res, next) {
   }
 }
 
+async function updateComment(req, res, next) {
+  try {
+    const updatedComment = await commentService.updateCommentById(
+      req.body?.comment, // content
+      req.params?.commentId,
+      req.user.id
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        createResponse(
+          true,
+          "Comment updated successfully",
+          updatedComment,
+          null
+        )
+      );
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function deleteComment(req, res, next) {
   try {
     const deletedComment = await commentService.deleteCommentById(
@@ -67,4 +89,5 @@ module.exports = {
   createComment,
   getRecipeComments,
   deleteComment,
+  updateComment,
 };

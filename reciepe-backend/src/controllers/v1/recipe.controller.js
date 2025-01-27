@@ -101,6 +101,40 @@ async function getRecipesByUser(req, res, next) {
   }
 }
 
+async function filterRecipes(req, res, next) {
+  try {
+    const { page, limit, minPrepTime, maxPrepTime, ingredientIds } = req.query;
+
+    if (ingredientIds) {
+      const recipes = await recipeService.filterRecipesByIngredients(
+        page,
+        limit,
+        ingredientIds
+      );
+      return res
+        .status(StatusCodes.OK)
+        .json(
+          createResponse(true, "Recipes fetched successfully", recipes, null)
+        );
+    }
+
+    const recipes = await recipeService.filterRecipes(
+      page,
+      limit,
+      minPrepTime,
+      maxPrepTime
+    );
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        createResponse(true, "Recipes fetched successfully", recipes, null)
+      );
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getRecipes,
   createRecipe,
@@ -108,4 +142,5 @@ module.exports = {
   updateRecipe,
   getRecipe,
   getRecipesByUser,
+  filterRecipes,
 };

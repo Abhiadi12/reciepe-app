@@ -21,6 +21,8 @@ const convertPreparationTimeAsNumber = (req, res, next) => {
 };
 
 recipeRouter.get("/", v1RecipeController.getRecipes);
+// filter recipes
+recipeRouter.get("/filter", decodeToken, v1RecipeController.filterRecipes);
 recipeRouter.post(
   "/",
   upload.single("file"),

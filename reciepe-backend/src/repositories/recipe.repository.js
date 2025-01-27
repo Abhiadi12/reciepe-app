@@ -43,11 +43,46 @@ class RecipeRepository {
   }
 
   async getRecipesByUser(userId, page, limit) {
-    return await Recipe.find({ createdBy: userId })
+    const totalRecipes = await Recipe.countDocuments({ createdBy: userId });
+    const recipes = await Recipe.find({ createdBy: userId })
       .populate("ingredients")
       .populate("createdBy", "username")
       .skip((page - 1) * limit)
       .limit(limit);
+
+    return { recipes, totalRecipes };
+  }
+
+  async filterRecipes(page, limit, minPrepTime, maxPrepTime) {
+    const totalRecipes = await Recipe.countDocuments({
+      prepTime: { $gte: minPrepTime, $lte: maxPrepTime },
+    });
+
+    const recipes = await Recipe.find({
+      prepTime: { $gte: minPrepTime, $lte: maxPrepTime },
+    })
+      .populate("ingredients")
+      .populate("createdBy", "username")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return { recipes, totalRecipes };
+  }
+
+  async filterRecipesByIngredients(page, limit, ingredientIds) {
+    const totalRecipes = await Recipe.countDocuments({
+      ingredients: { $in: ingredientIds },
+    });
+
+    const recipes = await Recipe.find({
+      ingredients: { $in: ingredientIds },
+    })
+      .populate("ingredients")
+      .populate("createdBy", "username")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return { recipes, totalRecipes };
   }
 }
 

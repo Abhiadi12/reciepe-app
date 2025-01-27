@@ -60,6 +60,22 @@ class CommentService {
     }
   }
 
+  async updateCommentById(comment, commentId, userId) {
+    try {
+      // checkCommentExist
+      const comment = this.checkCommentExist(commentId);
+      // checkAuthorization
+      this.checkAuthorization(comment, userId);
+      const updatedComment = await this.commentRepository.updateCommentById(
+        commentId,
+        comment
+      );
+      return updatedComment;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async deleteCommentById(recipeId, commentId, userId) {
     try {
       // checkCommentExist

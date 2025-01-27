@@ -9,6 +9,16 @@ class CommentRepository {
     }
   }
 
+  async updateCommentById(id, comment) {
+    try {
+      return await Comment.findByIdAndUpdate(id, comment, {
+        new: true,
+      }).populate("user", "username");
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async deleteCommentById(id) {
     try {
       return await Comment.findByIdAndDelete(id);

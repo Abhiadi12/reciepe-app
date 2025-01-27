@@ -14,6 +14,12 @@ commentRouter.post(
   decodeToken,
   v1CommentController.createComment
 );
+commentRouter.put(
+  "/:commentId",
+  validatePayload(commentPayloadSchema),
+  decodeToken,
+  v1CommentController.updateComment
+);
 commentRouter.delete(
   "/:commentId",
   decodeToken,

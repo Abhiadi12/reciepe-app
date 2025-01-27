@@ -117,12 +117,39 @@ class RecipeService {
   async getRecipesByUser(userId, page = 1, limit = 10) {
     try {
       this.checkValidObjectId(userId, "Invalid user Id");
-      const recipes = await this.recipeRepository.getRecipesByUser(
-        userId,
-        page,
-        limit
-      );
-      return recipes;
+      const { recipes, totalRecipes } =
+        await this.recipeRepository.getRecipesByUser(userId, page, limit);
+      return { recipes, totalRecipes };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async filterRecipes(page = 1, limit = 10, minPrepTime, maxPrepTime) {
+    try {
+      const { recipes, totalRecipes } =
+        await this.recipeRepository.filterRecipes(
+          page,
+          limit,
+          minPrepTime,
+          maxPrepTime
+        );
+      return { recipes, totalRecipes };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async filterRecipesByIngredients(page = 1, limit = 10, ingredientIds) {
+    try {
+      const ingredientIdsArray = ingredientIds.split(",");
+      const { recipes, totalRecipes } =
+        await this.recipeRepository.filterRecipesByIngredients(
+          page,
+          limit,
+          ingredientIdsArray
+        );
+      return { recipes, totalRecipes };
     } catch (error) {
       throw error;
     }
