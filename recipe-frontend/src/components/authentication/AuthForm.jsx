@@ -33,7 +33,6 @@ function AuthForm() {
 
   async function onSubmit(data) {
     setError("");
-    console.log(data);
     if (islogin) {
       try {
         const response = await login(data.email, data.password);

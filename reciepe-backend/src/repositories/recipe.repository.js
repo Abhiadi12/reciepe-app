@@ -1,10 +1,15 @@
 const { Recipe } = require("../models");
 
 class RecipeRepository {
-  async getRecipes() {
-    return await Recipe.find()
+  async getRecipes(page, limit) {
+    const totalRecipes = await Recipe.find().countDocuments();
+    const recipes = await Recipe.find()
       .populate("ingredients")
-      .populate("createdBy", "username");
+      .populate("createdBy", "username")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return { recipes, totalRecipes };
   }
 
   async createRecipe(payload) {
@@ -76,6 +81,30 @@ class RecipeRepository {
 
     const recipes = await Recipe.find({
       ingredients: { $in: ingredientIds },
+    })
+      .populate("ingredients")
+      .populate("createdBy", "username")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return { recipes, totalRecipes };
+  }
+
+  async filterRecipesByIngredientsAndTime(
+    page,
+    limit,
+    ingredientIds,
+    minPrepTime,
+    maxPrepTime
+  ) {
+    const totalRecipes = await Recipe.countDocuments({
+      ingredients: { $in: ingredientIds },
+      prepTime: { $gte: minPrepTime, $lte: maxPrepTime },
+    });
+
+    const recipes = await Recipe.find({
+      ingredients: { $in: ingredientIds },
+      prepTime: { $gte: minPrepTime, $lte: maxPrepTime },
     })
       .populate("ingredients")
       .populate("createdBy", "username")

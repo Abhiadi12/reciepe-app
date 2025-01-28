@@ -3,7 +3,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import authReducer from "./authSlice";
-import alertReducer from "./alertSlice"; // Import the alert slice
+import alertReducer from "./alertSlice";
+import filterRecipeReducer from "./filterRecipeSlice";
 
 // Persist config for auth slice
 const persistConfig = {
@@ -16,6 +17,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer, // Auth state will be persisted
   alert: alertReducer, // Alert state will not be persisted
+  filterRecipe: filterRecipeReducer, // Filter recipe state will not be persisted
 });
 
 // Persist only the auth part of the root reducer

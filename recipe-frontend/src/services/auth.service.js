@@ -1,15 +1,15 @@
-import axios from "axios";
 import { AUTH_URL } from "../constants/authUrl.constant";
+import { nonAuthenticatedAxios } from "./api.service";
 
 export const login = async (email, password) => {
-  return axios.post(AUTH_URL.LOGIN, {
+  return nonAuthenticatedAxios.post(AUTH_URL.LOGIN, {
     email,
     password,
   });
 };
 
 export const signup = async (username, email, password) => {
-  return axios.post(AUTH_URL.SIGNUP, {
+  return nonAuthenticatedAxios.post(AUTH_URL.SIGNUP, {
     username,
     email,
     password,
@@ -17,5 +17,5 @@ export const signup = async (username, email, password) => {
 };
 
 export const getProfile = async (id) => {
-  return axios.get(AUTH_URL.PROFILE.replace(":id", id));
+  return nonAuthenticatedAxios.get(AUTH_URL.PROFILE.replace(":id", id));
 };

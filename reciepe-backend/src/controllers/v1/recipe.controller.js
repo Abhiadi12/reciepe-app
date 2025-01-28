@@ -10,8 +10,9 @@ const logUser = (req) => {
   console.log("User: ", req.user);
 };
 
-async function getRecipes(_, res) {
-  const allRecipes = await recipeService.getRecipes();
+async function getRecipes(req, res) {
+  const { page, limit } = req.query;
+  const allRecipes = await recipeService.getRecipes(page, limit);
   return res
     .status(StatusCodes.OK)
     .json(
@@ -104,7 +105,18 @@ async function getRecipesByUser(req, res, next) {
 async function filterRecipes(req, res, next) {
   try {
     const { page, limit, minPrepTime, maxPrepTime, ingredientIds } = req.query;
-
+    if (minPrepTime && maxPrepTime && ingredientIds) {
+      const recipes = await recipeService.filterRecipesByIngredientsAndTime(
+        page,
+        limit,
+        ingredientIds
+      );
+      return res
+        .status(StatusCodes.OK)
+        .json(
+          createResponse(true, "Recipes fetched successfully", recipes, null)
+        );
+    }
     if (ingredientIds) {
       const recipes = await recipeService.filterRecipesByIngredients(
         page,

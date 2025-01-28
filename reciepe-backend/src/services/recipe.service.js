@@ -46,10 +46,13 @@ class RecipeService {
     }
   }
 
-  async getRecipes() {
+  async getRecipes(page = 1, limit = 10) {
     try {
-      const recipes = await this.recipeRepository.getRecipes();
-      return recipes;
+      const { recipes, totalRecipes } = await this.recipeRepository.getRecipes(
+        page,
+        limit
+      );
+      return { recipes, totalRecipes };
     } catch (error) {
       throw error;
     }
@@ -148,6 +151,29 @@ class RecipeService {
           page,
           limit,
           ingredientIdsArray
+        );
+      return { recipes, totalRecipes };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async filterRecipesByIngredientsAndTime(
+    page = 1,
+    limit = 10,
+    ingredientIds,
+    minPrepTime,
+    maxPrepTime
+  ) {
+    try {
+      const ingredientIdsArray = ingredientIds.split(",");
+      const { recipes, totalRecipes } =
+        await this.recipeRepository.filterRecipesByIngredientsAndTime(
+          page,
+          limit,
+          ingredientIdsArray,
+          minPrepTime,
+          maxPrepTime
         );
       return { recipes, totalRecipes };
     } catch (error) {
