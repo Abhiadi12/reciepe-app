@@ -11,9 +11,11 @@ import {
 import { login, signup } from "../../services/auth.service";
 import { showAlert } from "../../store/alertSlice";
 import { ALERT_TYPE } from "../../constants/alert.constant";
+import { login as loginAction } from "../../store/authSlice";
 
 function AuthForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [islogin, setIsLogin] = React.useState(true);
   const [error, setError] = React.useState("");
   const {
@@ -35,15 +37,14 @@ function AuthForm() {
     if (islogin) {
       try {
         const response = await login(data.email, data.password);
-        dispatch(login(response.data.data));
+        dispatch(loginAction(response.data.data));
         dispatch(
           showAlert({
             message: "Login successful!",
             type: ALERT_TYPE.SUCCESS,
           })
         );
-        reset(); // Reset the form on success
-        //navigate to home page todo
+        navigate("/home");
       } catch (error) {
         dispatch(
           showAlert({
@@ -62,7 +63,7 @@ function AuthForm() {
           })
         );
         setIsLogin(true);
-        reset(); // Reset the form on success
+        reset();
       } catch (error) {
         dispatch(
           showAlert({

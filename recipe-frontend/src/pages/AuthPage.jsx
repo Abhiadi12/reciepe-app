@@ -5,7 +5,6 @@ import Header from "../components/header/Header";
 function AuthPage() {
   return (
     <>
-      <Header />
       <div className="flex h-screen items-center justify-center">
         <AuthForm />
       </div>

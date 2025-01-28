@@ -1,12 +1,24 @@
 import React from "react";
-import { AuthPage } from "./pages";
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromChildren } from "react-router-dom";
+import { AuthPage, Profile, Home, Layout } from "./pages";
+import PrivateRoute from "./components/authentication/PrivateRoute";
+
+const router= createBrowserRouter(
+  createRoutesFromChildren(
+    <Route path="/" element={<Layout/>}>
+      <Route path="/" element={<AuthPage />} />
+      <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} />
+      <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>} />
+    </Route>
+  )
+);
+
+
 
 function App() {
   return (
     <>
-      <div>
-        <AuthPage />
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 }
