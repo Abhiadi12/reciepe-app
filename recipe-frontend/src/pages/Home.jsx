@@ -6,56 +6,106 @@ import {
   fetchAllRecipes,
   fetchFilteredRecipes,
 } from "../services/recipe.service";
-import { filterRecipeRequest } from "../store/filterRecipeSlice";
+import {
+  filterRecipeFail,
+  filterRecipeRequest,
+  filterRecipeSuccess,
+} from "../store/filterRecipeSlice";
 import usePagination from "../hooks/usePagination";
+import Pagination from "../components/common/Pagination";
+import ShimmerCard from "../components/recipe/ShimmerCard";
 
 function Home() {
-  const { loading, data, error } = useSelector((state) => state.filterRecipe);
+  const { loading, data } = useSelector((state) => state.filterRecipe);
   const {
     page,
-    setPage,
     pageSize,
-    setPageSize,
     totalPages,
-    setTotalPages,
     handlePageChange,
     handlePageSizeChange,
     handleTotalPagesChange,
     isDisabled,
-  } = usePagination(1, 10);
+  } = usePagination(1, 10, 1);
+  const [skipEffect, setSkipEffect] = React.useState(false);
 
   const dispatch = useDispatch();
 
   const fetchRecipes = async (
-    minTime,
-    maxTime,
-    ingridentsIds,
+    minPrepTime,
+    maxPrepTime,
+    ingredientIds,
     fetchAll = false
   ) => {
+    if (!fetchAll) {
+      setSkipEffect(true);
+    }
+
     dispatch(filterRecipeRequest());
     try {
       if (fetchAll) {
-        // Fetch all recipes
-        const response = await fetchAllRecipes();
-        dispatch(filterRecipeSuccess(response?.data?.data));
+        const response = await fetchAllRecipes({
+          page: page,
+          limit: pageSize,
+        });
+        const { recipes, totalRecipes } = response.data?.data;
+
+        dispatch(filterRecipeSuccess(recipes));
+        handleTotalPagesChange(totalRecipes);
         return;
       }
+
+      const response = await fetchFilteredRecipes(
+        1,
+        pageSize,
+        minPrepTime,
+        maxPrepTime,
+        ingredientIds
+      );
+      handlePageChange(1);
+      const { recipes, totalRecipes } = response.data?.data;
+
+      dispatch(filterRecipeSuccess(recipes));
+      handleTotalPagesChange(totalRecipes);
     } catch (error) {
       dispatch(filterRecipeFail(error?.message));
     }
   };
 
   React.useEffect(() => {
-    fetchRecipes(0, 0, [], true);
-  }, []);
+    if (skipEffect) {
+      setSkipEffect(false);
+      return;
+    }
 
-  console.log("data - loaidnf", loading, data);
+    fetchRecipes(0, 0, [], true);
+  }, [page, pageSize]);
+
   return (
     <div className="mt-12 p-4">
-      <FilterHeader fetchRecipes={fetchRecipes} />
-      <div className="flex flex-col gap-2 items-center">
-        {/* <RecipeCard />
-        <RecipeCard /> */}
+      <FilterHeader fetchFilteredRecipes={fetchRecipes} />
+      <div className="mb-2">
+        <Pagination
+          currentPage={page}
+          totalPages={Math.ceil(totalPages / pageSize)}
+          onPageChange={handlePageChange}
+          isDisabled={isDisabled(page)}
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        {loading
+          ? [...Array(3)].map((_, index) => <ShimmerCard key={index} />)
+          : data.map((recipe) => (
+              <RecipeCard
+                key={recipe?._id}
+                imageUrl={recipe?.image?.url}
+                title={recipe?.title}
+                description={recipe?.description}
+                prepTime={recipe?.prepTime}
+                ratings={recipe?.ratings}
+                ingedients={recipe?.ingredients}
+                id={recipe?._id}
+              />
+            ))}
       </div>
     </div>
   );

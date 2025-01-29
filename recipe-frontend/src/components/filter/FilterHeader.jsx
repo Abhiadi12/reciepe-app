@@ -14,7 +14,7 @@ import { FILTER_BY_TIME } from "../../constants/mock.constant";
 
 function FilterHeader({ fetchFilteredRecipes }) {
   const {
-    ingridentsIds,
+    ingredientIds,
     preparationTime,
     handleChangeIngrident,
     handleChangePreparationTime,
@@ -31,12 +31,15 @@ function FilterHeader({ fetchFilteredRecipes }) {
 
   const onChangeHandler = (value) => {
     const [start, end] = value?.split("-");
-    console.log("start", start, "end", end);
     handleChangePreparationTime(Number(start), Number(end));
   };
 
   const handleClickOnSearch = () => {
-    console.log("ingridentsIds", ingridentsIds, preparationTime);
+    fetchFilteredRecipes(
+      preparationTime?.minPrepTime,
+      preparationTime?.maxPrepTime,
+      ingredientIds
+    );
   };
 
   return (

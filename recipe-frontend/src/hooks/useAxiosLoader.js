@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {
+  authenticatedAxios,
+  nonAuthenticatedAxios,
+} from "../services/api.service";
 
 const useAxiosLoader = () => {
   const [loading, setLoading] = useState(false);
@@ -17,12 +20,14 @@ const useAxiosLoader = () => {
     };
 
     const setupInterceptors = () => {
-      requestInterceptor = axios.interceptors.request.use((config) => {
-        showLoader();
-        return config;
-      });
+      requestInterceptor = authenticatedAxios.interceptors.request.use(
+        (config) => {
+          showLoader();
+          return config;
+        }
+      );
 
-      responseInterceptor = axios.interceptors.response.use(
+      responseInterceptor = authenticatedAxios.interceptors.response.use(
         (response) => {
           hideLoader();
           return response;
@@ -35,8 +40,8 @@ const useAxiosLoader = () => {
     };
 
     const removeInterceptors = () => {
-      axios.interceptors.request.eject(requestInterceptor);
-      axios.interceptors.response.eject(responseInterceptor);
+      authenticatedAxios.interceptors.request.eject(requestInterceptor);
+      authenticatedAxios.interceptors.response.eject(responseInterceptor);
     };
 
     setupInterceptors();

@@ -106,10 +106,13 @@ async function filterRecipes(req, res, next) {
   try {
     const { page, limit, minPrepTime, maxPrepTime, ingredientIds } = req.query;
     if (minPrepTime && maxPrepTime && ingredientIds) {
+      console.log("Filtering by time and ingredients");
       const recipes = await recipeService.filterRecipesByIngredientsAndTime(
         page,
         limit,
-        ingredientIds
+        ingredientIds,
+        minPrepTime,
+        maxPrepTime
       );
       return res
         .status(StatusCodes.OK)
@@ -118,6 +121,7 @@ async function filterRecipes(req, res, next) {
         );
     }
     if (ingredientIds) {
+      console.log("Filtering by ingredients");
       const recipes = await recipeService.filterRecipesByIngredients(
         page,
         limit,
@@ -130,6 +134,7 @@ async function filterRecipes(req, res, next) {
         );
     }
 
+    console.log("Filtering by time");
     const recipes = await recipeService.filterRecipes(
       page,
       limit,

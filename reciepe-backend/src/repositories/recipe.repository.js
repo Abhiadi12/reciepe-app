@@ -75,6 +75,7 @@ class RecipeRepository {
   }
 
   async filterRecipesByIngredients(page, limit, ingredientIds) {
+    console.log("ingredientIds::", ingredientIds);
     const totalRecipes = await Recipe.countDocuments({
       ingredients: { $in: ingredientIds },
     });
@@ -97,6 +98,7 @@ class RecipeRepository {
     minPrepTime,
     maxPrepTime
   ) {
+    console.log("ingredientIds::", ingredientIds);
     const totalRecipes = await Recipe.countDocuments({
       ingredients: { $in: ingredientIds },
       prepTime: { $gte: minPrepTime, $lte: maxPrepTime },

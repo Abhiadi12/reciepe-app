@@ -4,5 +4,6 @@ import Input from "./Input";
 import MenuBar from "./MenuBar";
 import Avatar from "./Avatar";
 import Alert from "./Alert";
+import Modal from "./Modal";
 
-export { Button, Card, Input, MenuBar, Avatar, Alert };
+export { Button, Card, Input, MenuBar, Avatar, Alert, Modal };

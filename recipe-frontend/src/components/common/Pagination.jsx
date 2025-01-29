@@ -2,7 +2,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-function Pagination({ currentPage, totalPages, onPageChange }) {
+function Pagination({ currentPage, totalPages, onPageChange, isDisabled }) {
   return (
     <div className="flex items-center justify-around mt-4">
       <button
@@ -23,7 +23,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
       <button
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
+        disabled={isDisabled}
         className="inline-flex items-center px-4 py-2 text-sm font-medium text-muted-foreground bg-muted/50 rounded-md hover:bg-muted/60 disabled:opacity-50"
       >
         Next

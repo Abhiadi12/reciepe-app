@@ -1,3 +1,8 @@
+import React from "react";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getTableFields } from "../../utils/getTableFields";
+
 function Table({ columns, data, title, showActions = true }) {
   return (
     <div className="overflow-x-auto">
@@ -8,11 +13,16 @@ function Table({ columns, data, title, showActions = true }) {
             {columns.map((column) => (
               <th
                 key={column.key}
-                className="py-2 px-4 text-left bg-gray-100 border-b border-gray-300 text-sm font-semibold text-gray-700"
+                className="py-2 px-4 text-center bg-gray-100 border-b border-gray-300 text-sm font-semibold text-gray-700"
               >
                 {column.title}
               </th>
             ))}
+            {showActions && (
+              <th className="py-2 px-4 text-center bg-gray-100 border-b border-gray-300 text-sm font-semibold text-gray-700">
+                Actions
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -21,14 +31,31 @@ function Table({ columns, data, title, showActions = true }) {
               {columns.map((column) => (
                 <td
                   key={column.key}
-                  className="py-2 px-4 border-b border-gray-300 text-sm text-gray-600"
+                  className="py-2 px-4 border-b border-gray-300 text-center text-sm text-gray-600"
                 >
-                  {row[column.key]}
+                  {getTableFields(row[column.key])}
                 </td>
               ))}
+              {showActions && (
+                <td className="py-2 px-4 border-b border-gray-300 text-center text-sm text-gray-600">
+                  <div className="flex justify-around">
+                    <button
+                      className="text-blue-500 hover:text-blue-700"
+                      aria-label="Edit"
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    <button
+                      className="text-red-500 hover:text-red-700"
+                      aria-label="Delete"
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                </td>
+              )}
             </tr>
           ))}
-          {/* show action */}
         </tbody>
       </table>
     </div>

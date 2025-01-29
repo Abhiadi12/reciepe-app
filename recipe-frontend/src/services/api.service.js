@@ -1,5 +1,6 @@
 import axios from "axios";
 import { store } from "../store/store";
+import { logout } from "../store/authSlice";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const nonAuthenticatedAxios = axios.create({
@@ -28,9 +29,8 @@ authenticatedAxios.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      console.log(error);
-      console.log("Unauthorized request");
+    if (error.response?.data?.message === "Invalid Token.") {
+      store.dispatch(logout());
     }
     return Promise.reject(error);
   }
