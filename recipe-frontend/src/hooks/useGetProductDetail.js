@@ -4,11 +4,13 @@ import { fetchRecipeById } from "../services/recipe.service";
 import { showAlert } from "../store/alertSlice";
 
 function useGetProductDetail(productId) {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function getProductDetail() {
+      if (!productId) return;
+
       try {
         const response = await fetchRecipeById(productId);
         setProduct(response.data?.data);
@@ -23,7 +25,7 @@ function useGetProductDetail(productId) {
     }
 
     getProductDetail();
-  }, [productId]);
+  }, [productId, dispatch]);
 
   return { product };
 }

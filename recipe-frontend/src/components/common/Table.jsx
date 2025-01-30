@@ -3,7 +3,14 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getTableFields } from "../../utils/getTableFields";
 
-function Table({ columns, data, title, showActions = true }) {
+function Table({
+  columns,
+  data,
+  title,
+  handleChangeSelectedData,
+  showActions = true,
+}) {
+  console.log("data", data);
   return (
     <div className="overflow-x-auto">
       <h1 className="text-2xl font-semibold text-gray-700 mb-2">{title}</h1>
@@ -42,12 +49,16 @@ function Table({ columns, data, title, showActions = true }) {
                     <button
                       className="text-blue-500 hover:text-blue-700"
                       aria-label="Edit"
+                      onClick={() => handleChangeSelectedData(row._id, "edit")}
                     >
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                     <button
                       className="text-red-500 hover:text-red-700"
                       aria-label="Delete"
+                      onClick={() =>
+                        handleChangeSelectedData(row._id, "delete")
+                      }
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>

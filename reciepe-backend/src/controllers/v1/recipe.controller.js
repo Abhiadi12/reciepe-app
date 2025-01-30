@@ -58,7 +58,8 @@ async function updateRecipe(req, res, next) {
     const updatedRecipe = await recipeService.updateRecipeById(
       req.params.id,
       req.body,
-      req.user.id
+      req.user.id,
+      req.file
     );
     return res
       .status(StatusCodes.OK)

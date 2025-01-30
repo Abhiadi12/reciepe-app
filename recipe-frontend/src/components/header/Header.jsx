@@ -1,6 +1,7 @@
 import React from "react";
-import { MenuBar, Avatar, Button } from "../common";
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { MenuBar, Avatar, Button } from "../common";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
 
@@ -9,15 +10,19 @@ function Header() {
   function handleLogout() {
     dispatch(logout());
   }
-  const { user } = useSelector((state) => state.auth);
+  const username = useSelector((state) => state.auth?.user?.username);
+  const getFirstLetter = (name) => name.charAt(0).toUpperCase();
+
   return (
     <MenuBar className="justify-between">
       <Logo />
       <div className="flex items-center">
-        {user && (
+        {username && (
           <div className="flex gap-4">
             <Button onClick={handleLogout}>Logout</Button>
-            <Avatar className="mr-2">U</Avatar>
+            <Link to="/profile">
+              <Avatar className="mr-2">{getFirstLetter(username)}</Avatar>
+            </Link>
           </div>
         )}
       </div>

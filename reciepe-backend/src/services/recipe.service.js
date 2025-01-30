@@ -46,6 +46,17 @@ class RecipeService {
     }
   }
 
+  getPublicIdFromUrl(url) {
+    if (!url) {
+      throw new BadRequest("image url");
+    }
+
+    const splitUrl = url.split("/");
+    const publicId = splitUrl[splitUrl.length - 1].split(".")[0];
+    const prefix = splitUrl[splitUrl.length - 2];
+    return `${prefix}/${publicId}`;
+  }
+
   async getRecipes(page = 1, limit = 10) {
     try {
       const { recipes, totalRecipes } = await this.recipeRepository.getRecipes(
@@ -92,11 +103,29 @@ class RecipeService {
     }
   }
 
-  async updateRecipeById(id, payload, userId) {
+  async updateRecipeById(id, payload, userId, file) {
     try {
       const recipe = await this.recipeRepository.getRecipeById(id);
       this.checkRecipeExist(recipe);
       this.checkAuthorization(recipe, userId);
+
+      //if file is present, upload to cloudinary and update image url
+      //else use existing image url
+      if (file) {
+        this.checkFileExist(file);
+        const cloudinaryImage = await this.uploadImage(file);
+        payload.image = {
+          url: cloudinaryImage.secure_url,
+          public_id: cloudinaryImage.public_id,
+        };
+        removeFile(file.path);
+      } else {
+        payload.image = {
+          url: payload?.existingImage,
+          public_id: this.getPublicIdFromUrl(payload?.existingImage),
+        };
+        delete payload.existingImage;
+      }
       const updatedRecipe = await this.recipeRepository.updateRecipeById(
         id,
         payload

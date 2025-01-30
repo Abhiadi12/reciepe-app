@@ -5,5 +5,25 @@ import MenuBar from "./MenuBar";
 import Avatar from "./Avatar";
 import Alert from "./Alert";
 import Modal from "./Modal";
+import MultiSelect from "./MultiSelect";
+import Pagination from "./Pagination";
+import Textarea from "./Textarea";
+import FileInput from "./FileInput";
+import Dropdown from "./Dropdown";
+import BackdropLoader from "./BackdropLoader";
 
-export { Button, Card, Input, MenuBar, Avatar, Alert, Modal };
+export {
+  Button,
+  Card,
+  Input,
+  MenuBar,
+  Avatar,
+  Alert,
+  Modal,
+  MultiSelect,
+  Pagination,
+  Textarea,
+  FileInput,
+  Dropdown,
+  BackdropLoader,
+};

@@ -5,7 +5,7 @@ const ProductCard = ({ recipe }) => {
     <div className="bg-white shadow-md rounded-lg p-4 w-full">
       {/* Recipe Image */}
       <img
-        src={recipe.image?.url}
+        src={recipe?.image?.url}
         alt={recipe?.title}
         className="w-full h-48 object-cover rounded-lg aspect-video"
       />

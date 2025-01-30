@@ -1,11 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import useFilter from "../../hooks/useFilter";
-import Dropdown from "../common/Dropdown";
-import MultiSelect from "../common/MultiSelect";
-import Button from "../common/Button";
 import useFetchIngredients from "../../hooks/useFetchIngredients";
 import { FILTER_BY_TIME } from "../../constants/mock.constant";
+import { showAlert } from "../../store/alertSlice";
+import { ALERT_TYPE } from "../../constants/alert.constant";
+import { Dropdown, MultiSelect, Button } from "../common/";
 
 /***
  * FilterHeader component
@@ -22,12 +23,14 @@ function FilterHeader({ fetchFilteredRecipes }) {
 
   const { ingredients } = useFetchIngredients();
 
-  const { control } = useForm({
+  const { control, reset } = useForm({
     defaultValues: {
       preparationTime: "",
       ingredients: [],
     },
   });
+
+  const dispatch = useDispatch();
 
   const onChangeHandler = (value) => {
     const [start, end] = value?.split("-");
@@ -35,11 +38,33 @@ function FilterHeader({ fetchFilteredRecipes }) {
   };
 
   const handleClickOnSearch = () => {
+    if (
+      preparationTime?.minPrepTime === null &&
+      preparationTime?.maxPrepTime === null &&
+      ingredientIds.length === 0
+    ) {
+      dispatch(
+        showAlert({
+          message: "Please select atleast one filter",
+          type: ALERT_TYPE.ERROR,
+        })
+      );
+      return;
+    }
     fetchFilteredRecipes(
       preparationTime?.minPrepTime,
       preparationTime?.maxPrepTime,
       ingredientIds
     );
+  };
+
+  const handleClear = () => {
+    handleChangePreparationTime(null, null);
+    handleChangeIngrident([]);
+    // reset form
+    reset();
+    // fetch all recipes
+    fetchFilteredRecipes(0, 0, [], true);
   };
 
   return (
@@ -63,8 +88,9 @@ function FilterHeader({ fetchFilteredRecipes }) {
         }}
         className={"ml-2"}
       />
-      <div className="mt-7 ml-2">
+      <div className="mt-7 ml-2 flex gap-2">
         <Button onClick={handleClickOnSearch}>Search</Button>
+        <Button onClick={handleClear}>Clear</Button>
       </div>
     </div>
   );

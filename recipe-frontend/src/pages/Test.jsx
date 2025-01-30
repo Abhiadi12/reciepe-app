@@ -14,15 +14,12 @@ function Test() {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <button onClick={handleShowModal}>Show Modal</button>
-      <Modal
-        modalOpen={showModal}
-        setModalOpen={setShowModal}
-        cstmStyle="w-full max-w-2xl"
-      >
-        <AddRecipeForm />
-      </Modal>
+    <div>
+      {/* learn tailwind grid */}
+      <div className="flex flex-row gap-4">
+        <div className="basis-[100%] md:basis-2/3 bg-blue-500">01</div>
+        <div className="basis-[100%] md:basis-1/3  bg-blue-500">02</div>
+      </div>
     </div>
   );
 }

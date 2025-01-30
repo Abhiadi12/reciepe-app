@@ -13,6 +13,7 @@ const addRecipePaylodSchema = z.object({
     .number()
     .int()
     .min(1, "Preparation time must be at least 1 minute"),
+  existingImage: z.string().optional(),
 });
 
 module.exports = {
