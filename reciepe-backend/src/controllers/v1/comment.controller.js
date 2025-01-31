@@ -22,7 +22,6 @@ async function createComment(req, res, next) {
         createResponse(true, "Comment created successfully", comment, null)
       );
   } catch (error) {
-    console.log("log...", error);
     next(error);
   }
 }

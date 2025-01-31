@@ -43,7 +43,6 @@ function Home() {
     dispatch(filterRecipeRequest());
     try {
       if (fetchAll) {
-        console.log("fetchAll - 1");
         const response = await fetchAllRecipes({
           page: page,
           limit: pageSize,
@@ -54,7 +53,6 @@ function Home() {
         handleTotalPagesChange(totalRecipes);
         return;
       }
-      console.log("fetchAll - 2");
       const response = await fetchFilteredRecipes(
         1,
         pageSize,

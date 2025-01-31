@@ -1,24 +1,65 @@
 import React, { useState } from "react";
-import { Avatar, Modal } from "../common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Modal } from "../common";
 import { isAuthorize } from "../../utils/isAuthorize";
 import DeleteRecipe from "../recipe/DeleteRecipe";
+import { showAlert } from "../../store/alertSlice";
+import { ALERT_TYPE } from "../../constants/alert.constant";
+import CommentEdit from "./CommentEdit";
+import {
+  deleteComment,
+  updateCommentById,
+} from "../../services/comment.service";
 
-function CommentCard({ comment, recipeId, onDelete, onEdit }) {
+function CommentCard({
+  comment,
+  recipeId,
+  filterDeletedComment,
+  updateComment,
+}) {
   const currentUsrId = useSelector((state) => state.auth?.user?._id);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.comment);
+  const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    // onDelete(comment._id);
-    setIsDelete(false);
+  const handleDelete = async (commentId) => {
+    try {
+      const response = await deleteComment(recipeId, commentId);
+      const message = response.data?.message;
+
+      filterDeletedComment(commentId);
+      dispatch(showAlert({ message, type: ALERT_TYPE.SUCCESS }));
+    } catch (error) {
+      dispatch(
+        showAlert({
+          message: error.response?.data?.message,
+          type: ALERT_TYPE.ERROR,
+        })
+      );
+    } finally {
+      setIsDelete(false);
+    }
   };
 
-  const handleEdit = () => {
-    // onEdit(comment._id, editedComment);
+  const handleEdit = async () => {
+    try {
+      const response = await updateCommentById(recipeId, comment?._id, {
+        comment: editedComment,
+      });
+      const message = response.data?.message;
+      updateComment(comment?._id, editedComment);
+      dispatch(showAlert({ message, type: ALERT_TYPE.SUCCESS }));
+    } catch (error) {
+      dispatch(
+        showAlert({
+          message: error.response?.data?.message,
+          type: ALERT_TYPE.ERROR,
+        })
+      );
+    }
     setIsEdit(false);
   };
 
@@ -84,29 +125,12 @@ function CommentCard({ comment, recipeId, onDelete, onEdit }) {
         setModalOpen={setIsEdit}
         cstmStyle="w-full max-w-lg"
       >
-        <div className="p-4">
-          <h3 className="text-lg font-semibold">Edit Comment</h3>
-          <textarea
-            className="w-full border p-2 mt-2"
-            rows="3"
-            value={editedComment}
-            onChange={(e) => setEditedComment(e.target.value)}
-          />
-          <div className="flex justify-end mt-3 gap-2">
-            <button
-              className="px-4 py-2 bg-gray-300 rounded"
-              onClick={() => setIsEdit(false)}
-            >
-              Cancel
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-              onClick={handleEdit}
-            >
-              Save
-            </button>
-          </div>
-        </div>
+        <CommentEdit
+          editedComment={editedComment}
+          setEditedComment={setEditedComment}
+          setIsEdit={setIsEdit}
+          handleEdit={handleEdit}
+        />
       </Modal>
     </div>
   );

@@ -10,7 +10,6 @@ import Pagination from "./Pagination";
 import Textarea from "./Textarea";
 import FileInput from "./FileInput";
 import Dropdown from "./Dropdown";
-import BackdropLoader from "./BackdropLoader";
 
 export {
   Button,
@@ -25,5 +24,4 @@ export {
   Textarea,
   FileInput,
   Dropdown,
-  BackdropLoader,
 };

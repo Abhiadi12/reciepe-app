@@ -10,7 +10,6 @@ function Table({
   handleChangeSelectedData,
   showActions = true,
 }) {
-  console.log("data", data);
   return (
     <div className="overflow-x-auto">
       <h1 className="text-2xl font-semibold text-gray-700 mb-2">{title}</h1>

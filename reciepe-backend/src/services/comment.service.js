@@ -66,7 +66,7 @@ class CommentService {
   async updateCommentById(comment, commentId, userId) {
     try {
       // checkCommentExist
-      const comment = this.checkCommentExist(commentId);
+      const comment = await this.checkCommentExist(commentId);
       // checkAuthorization
       this.checkAuthorization(comment, userId);
       const updatedComment = await this.commentRepository.updateCommentById(
@@ -82,7 +82,7 @@ class CommentService {
   async deleteCommentById(recipeId, commentId, userId) {
     try {
       // checkCommentExist
-      const comment = this.checkCommentExist(commentId);
+      const comment = await this.checkCommentExist(commentId);
       // checkAuthorization
       this.checkAuthorization(comment, userId);
       await this.commentRepository.deleteCommentById(commentId);

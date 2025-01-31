@@ -26,9 +26,10 @@ function CommentBody({ id }) {
       setData(resetPage ? comments : [...data, ...comments]);
       handlePageChange(resetPage ? 2 : page + 1);
 
-      setHasMore(data.length < totalComments);
+      if (comments.length === 0) {
+        setHasMore(false);
+      }
     } catch (error) {
-      console.error(error);
       dispatch(
         showAlert({
           message: error.response?.data?.message,
@@ -36,6 +37,18 @@ function CommentBody({ id }) {
         })
       );
     }
+  };
+
+  const filterDeletedComment = (commentId) => {
+    setData((prev) => prev.filter((comment) => comment?._id !== commentId));
+  };
+
+  const updateComment = (commentId, data) => {
+    setData((prev) =>
+      prev.map((comment) =>
+        comment?._id === commentId ? { ...comment, comment: data } : comment
+      )
+    );
   };
 
   React.useEffect(() => {
@@ -49,7 +62,7 @@ function CommentBody({ id }) {
         name="comment"
         label="Add Comment"
         placeholder="Add your comment here"
-        fetchData={() => fetchData(true)} // Reset comments list after new comment
+        fetchData={() => fetchData(true)} // Reset comments to page 1
         className={"flex gap-2"}
       />
       <div>
@@ -60,7 +73,13 @@ function CommentBody({ id }) {
           loader={<ShimmerComment />}
         >
           {data.map((comment) => (
-            <CommentCard key={comment._id} comment={comment} recipeId={id} />
+            <CommentCard
+              key={comment._id}
+              comment={comment}
+              recipeId={id}
+              filterDeletedComment={filterDeletedComment}
+              updateComment={updateComment}
+            />
           ))}
         </InfiniteScroll>
       </div>

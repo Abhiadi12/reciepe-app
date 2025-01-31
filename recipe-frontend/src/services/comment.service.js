@@ -29,7 +29,7 @@ export const deleteComment = async (id, commentId) => {
   );
 };
 
-export const updateComment = async (id, commentId, data) => {
+export const updateCommentById = async (id, commentId, data) => {
   return authenticatedAxios.put(
     COMMENT_URL.UPDATE_COMMENT.replace(":id", id).replace(
       ":commentId",

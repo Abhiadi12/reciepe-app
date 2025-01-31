@@ -42,7 +42,6 @@ async function deleteIngridents(req, res, next) {
     const deletedIngrident = await ingridentService.deleteIngridents(
       req.params.name
     );
-    console.log(deletedIngrident);
     if (!deletedIngrident) {
       throw new NotFound("Ingrident");
     }
