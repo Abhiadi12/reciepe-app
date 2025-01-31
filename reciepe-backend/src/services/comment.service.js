@@ -9,6 +9,7 @@ class CommentService {
   }
 
   async returnSavedRecipe(recipeId) {
+    console.log("recipeId", recipeId);
     const recipe = await this.recipeRepository.getRecipeById(recipeId);
     if (!recipe) {
       throw new NotFound("Recipe");
@@ -34,27 +35,29 @@ class CommentService {
     try {
       await this.returnSavedRecipe(recipeId);
 
-      // if recipe exist, create comment
-      const comment = await this.commentRepository.createComment({
+      const newComment = await this.commentRepository.createComment({
         comment,
         entityId: recipeId,
         entityType: this.entityType,
         user: userId,
       });
 
-      return comment;
+      return newComment;
     } catch (error) {
       throw error;
     }
   }
 
-  async fetchCommentsForRecipe(recipeId) {
+  async fetchCommentsForRecipe(recipeId, page = 1, limit = 10) {
     try {
-      const comments = await this.commentRepository.findAllCommentsForRecipe(
-        recipeId,
-        this.entityType
-      );
-      return comments;
+      const { comments, totalComments } =
+        await this.commentRepository.findAllCommentsForRecipe(
+          recipeId,
+          this.entityType,
+          page,
+          limit
+        );
+      return { comments, totalComments };
     } catch (error) {
       throw error;
     }

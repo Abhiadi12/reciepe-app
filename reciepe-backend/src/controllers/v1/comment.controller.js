@@ -2,19 +2,18 @@ const { StatusCodes } = require("http-status-codes");
 const { RecipeRepository } = require("../../repositories");
 const { CommentRepository } = require("../../repositories");
 const { CommentService } = require("../../services");
+const createResponse = require("../../utils/createResponse");
 
 const commentService = new CommentService(
   new CommentRepository(),
   new RecipeRepository()
 );
 
-const createResponse = require("../../utils/createResponse");
-
 async function createComment(req, res, next) {
   try {
-    const comment = await commentService.createRating(
+    const comment = await commentService.createComment(
       req.body?.comment,
-      req.params?.id, // recipeId
+      req.recipeId, // recipeId
       req.user.id
     );
     return res
@@ -30,11 +29,18 @@ async function createComment(req, res, next) {
 
 async function getRecipeComments(req, res, next) {
   try {
-    const comments = await commentService.fetchCommentsForRecipe(req.params.id);
+    const { page, limit } = req.query;
+    const { comments, totalComments } =
+      await commentService.fetchCommentsForRecipe(req.recipeId, page, limit);
     return res
       .status(StatusCodes.OK)
       .json(
-        createResponse(true, "Comments fetched successfully", comments, null)
+        createResponse(
+          true,
+          "Comments fetched successfully",
+          { comments, totalComments },
+          null
+        )
       );
   } catch (error) {
     next(error);
@@ -66,7 +72,7 @@ async function updateComment(req, res, next) {
 async function deleteComment(req, res, next) {
   try {
     const deletedComment = await commentService.deleteCommentById(
-      req.params?.id,
+      req.recipeId,
       req.params?.commentId,
       req.user.id
     );

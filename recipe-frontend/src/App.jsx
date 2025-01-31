@@ -8,8 +8,6 @@ import {
 import { AuthPage, Profile, Home, Layout, Test } from "./pages";
 import PrivateRoute from "./components/authentication/PrivateRoute";
 import ProductDetail from "./components/productDetail/ProductDetail";
-import useAxiosLoader from "./hooks/useAxiosLoader";
-import { BackdropLoader } from "./components/common";
 
 const router = createBrowserRouter(
   createRoutesFromChildren(

@@ -2,6 +2,7 @@ const { Comment } = require("../models");
 
 class CommentRepository {
   async createComment(payload) {
+    console.log("payload", payload);
     try {
       return await Comment.create(payload);
     } catch (error) {
@@ -27,11 +28,21 @@ class CommentRepository {
     }
   }
 
-  async findAllCommentsForRecipe(recipeId, entityType) {
-    return await Comment.find({
+  async findAllCommentsForRecipe(recipeId, entityType, page, limit) {
+    const totalComments = await Comment.find({
       entityId: recipeId,
       entityType,
-    }).populate("user", "username");
+    }).countDocuments();
+    const comments = await Comment.find({
+      entityId: recipeId,
+      entityType,
+    })
+      .populate("user", "username")
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return { comments, totalComments };
   }
 
   async findCommentById(id) {

@@ -7,7 +7,7 @@ const {
   commentPayloadSchema,
 } = require("../../validations/comment.validation");
 
-commentRouter.get("/", v1CommentController.getRecipeComments);
+commentRouter.get("/", decodeToken, v1CommentController.getRecipeComments);
 commentRouter.post(
   "/",
   validatePayload(commentPayloadSchema),
