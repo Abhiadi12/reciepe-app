@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchRecipeById } from "../services/recipe.service";
 import { showAlert } from "../store/alertSlice";
+import { ALERT_TYPE } from "../constants/alert.constant";
 
 function useGetProductDetail(productId) {
   const [product, setProduct] = useState(null);

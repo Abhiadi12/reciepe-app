@@ -21,6 +21,11 @@ ratingRouter.put(
   v1RatingController.updateRating
 );
 ratingRouter.delete("/:id", decodeToken, v1RatingController.deleteRating);
-ratingRouter.get("/:id", v1RatingController.getRatingById);
+ratingRouter.get("/:id", decodeToken, v1RatingController.getRatingsByRecipeId);
+ratingRouter.get(
+  "/:recipeId/user",
+  decodeToken,
+  v1RatingController.getRatingByUser
+);
 
 module.exports = ratingRouter;

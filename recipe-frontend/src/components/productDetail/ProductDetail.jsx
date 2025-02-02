@@ -4,12 +4,11 @@ import useGetProductDetail from "../../hooks/useGetProductDetail";
 import ProductCard from "./ProductCard";
 import CommentBody from "../comment/CommentBody";
 import { Card } from "../common";
+import RatingBody from "../rating/RatingBody";
 
 function ProductDetail() {
-  // get id from url using router-dom
   const { id } = useParams();
   const { product } = useGetProductDetail(id);
-  
 
   return (
     <div className="mt-16">
@@ -17,7 +16,9 @@ function ProductDetail() {
       <div className="grid grid-cols-1 md:grid-cols-2">
         <ProductCard recipe={product} />
 
-        <div className="bg-blue-300 p-4">row-1 col-2</div>
+        <div className="flex flex-col p-4 ">
+          <RatingBody recipeId={id} recipeOwnerId={product?.createdBy?._id} />
+        </div>
       </div>
 
       {/* Row 2 - Full Width */}

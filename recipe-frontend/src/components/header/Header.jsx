@@ -15,7 +15,9 @@ function Header() {
 
   return (
     <MenuBar className="justify-between">
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
       <div className="flex items-center">
         {username && (
           <div className="flex gap-4">

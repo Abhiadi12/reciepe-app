@@ -35,7 +35,7 @@ class RatingService {
       const recipe = await this.returnSavedRecipe(payload?.recipe);
       // not allow if recipe user id is the same as the rating user id
       if (recipe.createdBy?._id?.toString() === userId) {
-        throw new UnauthorizedError();
+        throw new UnauthorizedError("You can't rate your own recipe");
       }
       const rating = await this.ratingRepository.createRating(payload);
 
@@ -90,6 +90,38 @@ class RatingService {
       const rating = await this.ratingRepository.getRatingById(id);
       this.checkRatingExist(rating);
       return rating;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getRatingByUser(recipeId, userId) {
+    try {
+      const isvalid = checkValidId(recipeId);
+      if (!isvalid) {
+        throw new BadRequest("Invalid Recipe Id");
+      }
+      const rating = await this.ratingRepository.getRatingByRecipeAndUser(
+        recipeId,
+        userId
+      );
+      this.checkRatingExist(rating);
+      return rating;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getRatingsByRecipeId(recipeId) {
+    try {
+      const isvalid = checkValidId(recipeId);
+      if (!isvalid) {
+        throw new BadRequest("Invalid Recipe Id");
+      }
+      const ratings = await this.ratingRepository.getRatingsByRecipeId(
+        recipeId
+      );
+      return ratings;
     } catch (error) {
       throw error;
     }

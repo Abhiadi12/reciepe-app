@@ -56,16 +56,26 @@ async function deleteRating(req, res, next) {
   }
 }
 
-async function getRatingById(req, res, next) {
+async function getRatingsByRecipeId(req, res, next) {
   try {
-    const rating = await ratingService.getRatingById(req.params.id);
+    const rating = await ratingService.getRatingsByRecipeId(req.params.id);
 
-    console.log("rating", rating);
     return res
       .status(StatusCodes.OK)
       .json(createResponse(true, "Rating fetched successfully", rating, null));
   } catch (error) {
-    console.log("log...", error);
+    next(error);
+  }
+}
+
+async function getRatingByUser(req, res, next) {
+  try {
+    const { recipeId } = req.params;
+    const rating = await ratingService.getRatingByUser(recipeId, req.user.id);
+    return res
+      .status(StatusCodes.OK)
+      .json(createResponse(true, "Rating fetched successfully", rating, null));
+  } catch (error) {
     next(error);
   }
 }
@@ -74,5 +84,6 @@ module.exports = {
   createRating,
   updateRating,
   deleteRating,
-  getRatingById,
+  getRatingsByRecipeId,
+  getRatingByUser,
 };

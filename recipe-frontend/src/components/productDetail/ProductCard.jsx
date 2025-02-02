@@ -51,12 +51,6 @@ const ProductCard = ({ recipe }) => {
         <span className="text-muted-foreground">{recipe?.prepTime} mins</span>
       </div>
 
-      {/* Rating */}
-      <div className="mt-2 flex items-center">
-        <span className="text-lg font-medium mr-2 text-primary">Rating:</span>
-        <span className="text-yellow-500 text-xl">{"★".repeat(5)}</span>
-      </div>
-
       {/* created by */}
       <div className="mt-2 flex items-center">
         <span className="text-lg font-medium mr-2 text-primary">

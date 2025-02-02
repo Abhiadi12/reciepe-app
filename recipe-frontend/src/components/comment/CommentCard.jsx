@@ -69,9 +69,9 @@ function CommentCard({
         <div className="flex justify-between items-center">
           {/* Avatar & Username */}
           <div className="flex gap-2 items-center">
-            <Avatar>
+            <div className=" h-10 w-10 shrink-0 overflow-hidden rounded-full flex items-center justify-center bg-primary text-primary-foreground cursor-pointer">
               {comment?.user?.username?.[0]?.toUpperCase() || "U"}
-            </Avatar>
+            </div>
             <h3 className="text-primary text-lg font-semibold">
               {comment?.user?.username || "Unknown User"}
             </h3>
