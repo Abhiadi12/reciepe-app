@@ -1,8 +1,12 @@
 export function getTableFields(data) {
   if (Array.isArray(data)) {
-    return data.map((item, itemIndex) => {
-      return typeof item === "object" ? item.name : item;
+    const formattedData = data.map((item) => {
+      if (typeof item === "object" && item !== null) {
+        return item.name;
+      }
+      return item;
     });
+    return formattedData.join(", ");
   }
 
   return data;
