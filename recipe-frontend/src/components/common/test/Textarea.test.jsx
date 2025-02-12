@@ -3,9 +3,9 @@ import "@testing-library/jest-dom/vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
-import Input from "../Input";
+import Textarea from "../Textarea";
 
-describe("Input Component", () => {
+describe("Text Component", () => {
   const TestComponent = (props) => {
     const { control } = useForm({
       defaultValues: {
@@ -14,7 +14,7 @@ describe("Input Component", () => {
     });
 
     return (
-      <Input control={control} name={props.name || "testField"} {...props} />
+      <Textarea control={control} name={props.name || "testField"} {...props} />
     );
   };
 
@@ -24,18 +24,17 @@ describe("Input Component", () => {
 
   it("renders input element with correct attributes", () => {
     renderInput({
-      id: "test-input",
+      id: "test-area",
       placeholder: "Enter text",
-      type: "text",
     });
 
-    const input = screen.getByTestId("test-input");
+    const input = screen.getByTestId("test-area");
     expect(input).toBeInTheDocument();
   });
 
   it("renders label when provided", () => {
     renderInput({
-      id: "test-input",
+      id: "test-area",
       label: "Test Label",
     });
 
@@ -45,7 +44,7 @@ describe("Input Component", () => {
 
   it("does not render label when not provided", () => {
     renderInput({
-      id: "test-input",
+      id: "test-area",
     });
 
     const label = screen.queryByRole("label");
@@ -54,12 +53,13 @@ describe("Input Component", () => {
 
   it("handles onChange events", async () => {
     renderInput({
-      id: "test-input-change",
+      id: "test-area-change",
       name: "testField",
     });
 
-    const input = screen.getByTestId("test-input-change");
-    await fireEvent.change(input, { target: { value: "test value" } });
-    expect(input).toHaveValue("test value");
+    const input = screen.getByTestId("test-area-change");
+    fireEvent.change(input, { target: { value: "new value" } });
+
+    expect(input).toHaveValue("new value");
   });
 });

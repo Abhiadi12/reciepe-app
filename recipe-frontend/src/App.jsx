@@ -1,13 +1,19 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromChildren,
 } from "react-router-dom";
-import { AuthPage, Profile, Home, Layout, Test } from "./pages";
+import { AuthPage, Home, Layout, Test } from "./pages";
 import PrivateRoute from "./components/authentication/PrivateRoute";
-import ProductDetail from "./components/productDetail/ProductDetail";
+import Loading from "./components/shimmer/Loading";
+import NotFound from "./pages/NotFound";
+
+const ProductDetail = React.lazy(() =>
+  import("./components/productDetail/ProductDetail")
+);
+const Profile = React.lazy(() => import("./pages/Profile"));
 
 const router = createBrowserRouter(
   createRoutesFromChildren(
@@ -24,22 +30,26 @@ const router = createBrowserRouter(
       <Route
         path="/profile"
         element={
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
+          <Suspense fallback={<Loading />}>
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          </Suspense>
         }
       />
 
       <Route
         path="/product/:id"
         element={
-          <PrivateRoute>
-            <ProductDetail />
-          </PrivateRoute>
+          <Suspense fallback={<Loading />}>
+            <PrivateRoute>
+              <ProductDetail />
+            </PrivateRoute>
+          </Suspense>
         }
       />
       <Route path="/test" element={<Test />} />
-      <Route path="*" element={<h1>404 Not Found</h1>} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
