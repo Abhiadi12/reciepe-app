@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import Logo from "./Logo";
-import { MenuBar, Avatar, Button } from "../common";
+import { MenuBar, Avatar, Button } from "@/components/common";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../store/authSlice";
+import { logout } from "@/store/authSlice";
 
 function Header() {
   const dispatch = useDispatch();
@@ -16,14 +17,14 @@ function Header() {
 
   return (
     <MenuBar className="justify-between">
-      <Link to="/">
+      <Link href="/">
         <Logo />
       </Link>
       <div className="flex items-center">
         {username && (
           <div className="flex gap-4">
             <Button onClick={handleLogout}>Logout</Button>
-            <Link to="/profile">
+            <Link href="/profile">
               <Avatar className="mr-2">{getFirstLetter(username)}</Avatar>
             </Link>
           </div>

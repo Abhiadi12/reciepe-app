@@ -1,0 +1,18 @@
+export const message = {
+  EMAIL_REQUIRED: "Email is required",
+  EMAIL_VALID: "Enter a valid email address",
+  PASSWORD_REQUIRED: "Password is required",
+  PASSWORD_LENGTH: "Password must be at least 8 characters long",
+  NAME_REQUIRED: "Name is required",
+  NAME_LENGTH: "Name must be at least 3 characters long",
+  TITLE_REQUIRED: "Title is required",
+  TITLE_LENGTH: "Title must be at least 3 characters long",
+  DESCRIPTION_REQUIRED: "Description is required",
+  DESCRIPTION_LENGTH: "Description must be at least 3 characters long",
+  DESCRIPTION_MAX_LENGTH: "Description cannot exceed 500 characters",
+  INGREDIENTS_REQUIRED: "Ingredients are required",
+  STEP_CANNOT_BE_EMPTY: "This step cannot be empty",
+  PREP_TIME_REQUIRED: "Preparation time is required",
+  PREP_TIME_VALID: "Preparation time must be a number",
+  IMAGE_REQUIRED: "Image is required",
+};
