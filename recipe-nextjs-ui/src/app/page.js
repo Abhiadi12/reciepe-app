@@ -1,9 +1,14 @@
-export default function Home() {
+import AuthpageClient from "@/components/authentication/AuthpageClient";
+
+export const metadata = {
+  title: "Sign In | Your App Name",
+  description: "Sign in to your account to access all features.",
+};
+
+export default function AuthPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-destructive bg-card">
-        Welcome to my recipe app!
-      </h1>
-    </main>
+    <div className="flex h-screen items-center justify-center">
+      <AuthpageClient />
+    </div>
   );
 }
