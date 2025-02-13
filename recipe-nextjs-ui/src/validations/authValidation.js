@@ -1,9 +1,10 @@
 import { message } from "@/constants/message.constant";
+import { REGEX } from "@/constants/regex.constant";
 
 export const emailValidation = {
   required: message.EMAIL_REQUIRED,
   pattern: {
-    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    value: REGEX.EMAIL,
     message: message.EMAIL_VALID,
   },
 };

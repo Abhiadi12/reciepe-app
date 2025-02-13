@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "@/store/store";
 import { logout } from "@/store/authSlice";
+import { message } from "@/constants/message.constant";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const nonAuthenticatedAxios = axios.create({
@@ -21,7 +22,7 @@ authenticatedAxios.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 authenticatedAxios.interceptors.response.use(
@@ -29,9 +30,9 @@ authenticatedAxios.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response?.data?.message === "Invalid Token.") {
+    if (error.response?.data?.message === message.INVALID_TOKEN) {
       store.dispatch(logout());
     }
     return Promise.reject(error);
-  }
+  },
 );

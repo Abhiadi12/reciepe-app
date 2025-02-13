@@ -11,6 +11,7 @@ import { Dropdown, MultiSelect, Button } from "@/components/common";
 /***
  * FilterHeader component
  * @param {function} fetchFilteredRecipes -> function to fetch filtered recipes
+ * @returns {JSX.Element}
  */
 
 function FilterHeader({ fetchFilteredRecipes }) {
@@ -47,14 +48,14 @@ function FilterHeader({ fetchFilteredRecipes }) {
         showAlert({
           message: "Please select atleast one filter",
           type: ALERT_TYPE.ERROR,
-        })
+        }),
       );
       return;
     }
     fetchFilteredRecipes(
       preparationTime?.minPrepTime,
       preparationTime?.maxPrepTime,
-      ingredientIds
+      ingredientIds,
     );
   };
 
