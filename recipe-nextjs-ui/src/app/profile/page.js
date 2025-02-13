@@ -1,7 +1,16 @@
-import React from "react";
+import ProfileClient from "@/components/home/ProfileClient";
+
+export const metadata = {
+  title: "Profile Page",
+  description: "Your recipe are listed.",
+};
 
 function Profile() {
-  return <div>page of profile page</div>;
+  return (
+    <main>
+      <ProfileClient />
+    </main>
+  );
 }
 
 export default Profile;

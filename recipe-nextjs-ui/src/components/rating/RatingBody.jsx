@@ -42,7 +42,6 @@ function RatingBody({ recipeId, recipeOwnerId }) {
       dispatch(showAlert(response?.data?.message, ALERT_TYPE.SUCCESS));
       fetchAllRatings();
     } catch (error) {
-      console.log("error", error);
       dispatch(showAlert(error?.response?.data?.message, ALERT_TYPE.ERROR));
     }
   }

@@ -21,7 +21,6 @@ function AuthForm() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
     reset, // Get the reset function
   } = useForm({
     defaultValues: {
