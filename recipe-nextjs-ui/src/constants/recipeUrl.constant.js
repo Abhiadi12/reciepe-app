@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const RECIPE_URL = {
   FILTER: `${baseUrl}api/v1/recipes/filter`,

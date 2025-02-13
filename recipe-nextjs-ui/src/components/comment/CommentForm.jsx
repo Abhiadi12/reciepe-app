@@ -5,7 +5,7 @@ import Button from "@/components/common/Button";
 import { useDispatch } from "react-redux";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
-import { createComment } from "@/services/recipe.service";
+import { createComment } from "@/services/comment.service";
 
 function CommentForm({ id, label, name, placeholder, fetchData, className }) {
   const { control, handleSubmit, reset } = useForm({
@@ -23,7 +23,7 @@ function CommentForm({ id, label, name, placeholder, fetchData, className }) {
         showAlert({
           message: response.data?.message,
           type: ALERT_TYPE.SUCCESS,
-        })
+        }),
       );
       reset();
       fetchData && fetchData();
@@ -32,7 +32,7 @@ function CommentForm({ id, label, name, placeholder, fetchData, className }) {
         showAlert({
           message: error.response?.data?.message,
           type: ALERT_TYPE.ERROR,
-        })
+        }),
       );
     }
   };

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "@/store/store";
 import { logout } from "@/store/authSlice";
-const baseUrl = process.env.NEXT_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const nonAuthenticatedAxios = axios.create({
   baseURL: baseUrl,

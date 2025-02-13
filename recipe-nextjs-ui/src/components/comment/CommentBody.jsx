@@ -2,7 +2,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ShimmerComment from "@/components/shimmer/ShimmerComment";
 import usePagination from "@/hooks/usePagination";
-import { fetchRecipeComments } from "@/services/recipe.service";
+import { fetchRecipeComments } from "@/services/comment.service";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
 import CommentForm from "./CommentForm";
@@ -34,7 +34,7 @@ function CommentBody({ id }) {
         showAlert({
           message: error.response?.data?.message,
           type: ALERT_TYPE.ERROR,
-        })
+        }),
       );
     }
   };
@@ -46,8 +46,8 @@ function CommentBody({ id }) {
   const updateComment = (commentId, data) => {
     setData((prev) =>
       prev.map((comment) =>
-        comment?._id === commentId ? { ...comment, comment: data } : comment
-      )
+        comment?._id === commentId ? { ...comment, comment: data } : comment,
+      ),
     );
   };
 
