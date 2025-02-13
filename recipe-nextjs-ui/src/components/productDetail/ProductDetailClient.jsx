@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "next/navigation";
 import useGetProductDetail from "../../hooks/useGetProductDetail";
 import ProductCard from "./ProductCard";
 import CommentBody from "../comment/CommentBody";
@@ -8,7 +8,8 @@ import { Card } from "../common";
 import RatingBody from "../rating/RatingBody";
 
 function ProductDetail() {
-  const { id } = useParams();
+  const params = useParams();
+  const { id } = params;
   const { product } = useGetProductDetail(id);
 
   return (

@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const RATING_URL = {
   GET_RATING_BY_RECIPE_ID: `${baseUrl}api/v1/ratings/:recipeId/user`,

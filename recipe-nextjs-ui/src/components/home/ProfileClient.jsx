@@ -5,17 +5,18 @@ import usePagination from "@/hooks/usePagination";
 import useAxiosLoader from "@/hooks/useAxiosLoader";
 import Table from "@/components/common/Table";
 import Pagination from "@/components/common/Pagination";
-import AddRecipeForm from "@/components/recipe/AddRecipeForm";
+import AddRecipeForm from "@/components/recipe/AddRecipe";
 import EditRecipe from "@/components/recipe/EditRecipe";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import DeleteRecipe from "@/components/recipe/DeleteRecipe";
-import { columns } from "@/constants/recipe.constant";
-import { getProfile } from "@/services/recipe.service";
+import { columns } from "@/constants/profile.constant";
+import { getProfile } from "@/services/auth.service";
 import { Button, Modal } from "@/components/common";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { showAlert } from "@/store/alertSlice";
 import { deleteRecipe } from "@/services/recipe.service";
+import { ALERT_TYPE } from "@/constants/alert.constant";
 import ShimmerTable from "@/components/shimmer/ShimmerTable";
 
 function Profile() {
@@ -65,7 +66,7 @@ function Profile() {
     } catch (error) {
       dispatch(
         showAlert({
-          message: error.response.data?.message,
+          message: error.response?.data?.message,
           type: ALERT_TYPE.ERROR,
         }),
       );

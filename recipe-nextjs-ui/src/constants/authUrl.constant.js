@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const AUTH_URL = {
   LOGIN: `${baseUrl}api/v1/users/signin`,

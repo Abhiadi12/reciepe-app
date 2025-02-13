@@ -7,7 +7,7 @@ import { isAuthorize } from "@/utils/isAuthorize";
 import DeleteRecipe from "@/components/recipe/DeleteRecipe";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
-import { deleteComment, updateCommentById } from "@/services/recipe.service";
+import { deleteComment, updateCommentById } from "@/services/comment.service";
 import CommentEdit from "./CommentEdit";
 
 function CommentCard({
@@ -34,7 +34,7 @@ function CommentCard({
         showAlert({
           message: error.response?.data?.message,
           type: ALERT_TYPE.ERROR,
-        })
+        }),
       );
     } finally {
       setIsDelete(false);
@@ -54,7 +54,7 @@ function CommentCard({
         showAlert({
           message: error.response?.data?.message,
           type: ALERT_TYPE.ERROR,
-        })
+        }),
       );
     }
     setIsEdit(false);

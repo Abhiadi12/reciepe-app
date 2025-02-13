@@ -1,10 +1,9 @@
 import { RATING_URL } from "@/constants/ratingUrl.constant";
-import { validQueries } from "@/utils/getQueryParams";
 import { authenticatedAxios } from "./api.service";
 
 export const fetchRatingByRecipeId = async (recipeId) => {
   return authenticatedAxios.get(
-    RATING_URL.GET_RATING_BY_RECIPE_ID.replace(":recipeId", recipeId)
+    RATING_URL.GET_RATING_BY_RECIPE_ID.replace(":recipeId", recipeId),
   );
 };
 
@@ -18,7 +17,7 @@ export const updateRating = async (data) => {
 
 export const getAllRatingsByRecipeId = async (recipeId) => {
   return authenticatedAxios.get(
-    RATING_URL.GET_ALL_RATINGS_FOR_RECIPE.replace(":id", recipeId)
+    RATING_URL.GET_ALL_RATINGS_FOR_RECIPE.replace(":id", recipeId),
   );
 };
 
