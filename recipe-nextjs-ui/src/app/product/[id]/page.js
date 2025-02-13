@@ -1,7 +1,16 @@
-import React from "react";
+import ProductDetail from "@/components/productDetail/ProductDetailClient";
 
-function ProductDetail() {
-  return <div>hello from product detail page</div>;
+export const metadata = {
+  title: "Product Detail Page",
+  description: "Product detail page",
+};
+
+function ProductPage() {
+  return (
+    <main>
+      <ProductDetail />
+    </main>
+  );
 }
 
-export default ProductDetail;
+export default ProductPage;

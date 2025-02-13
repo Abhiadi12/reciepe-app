@@ -5,9 +5,9 @@
   ],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error",
-    "no-console": "warn",
+    "no-console": "error",
     "no-unused-vars": "warn",
-    "eqeqeq": "error"
+    "eqeqeq": "error",
+    "no-await-in-loop": "error"
   }
 }
