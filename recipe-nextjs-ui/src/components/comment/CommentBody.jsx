@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ShimmerComment from "@/components/shimmer/ShimmerComment";
@@ -5,9 +6,17 @@ import usePagination from "@/hooks/usePagination";
 import { fetchRecipeComments } from "@/services/comment.service";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
-import CommentForm from "./CommentForm";
-import CommentCard from "./CommentCard";
 import { useDispatch } from "react-redux";
+
+const CommentForm = dynamic(() => import("./CommentForm"), {
+  ssr: false,
+  loading: () => <ShimmerComment />,
+});
+
+const CommentCard = dynamic(() => import("./CommentCard"), {
+  ssr: false,
+  loading: () => <ShimmerComment />,
+});
 
 function CommentBody({ id }) {
   const dispatch = useDispatch();

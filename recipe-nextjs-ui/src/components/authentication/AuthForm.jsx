@@ -12,6 +12,7 @@ import { login, signup } from "@/services/auth.service";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
 import { login as loginAction } from "@/store/authSlice";
+import { message } from "@/constants/message.constant";
 
 function AuthForm() {
   const router = useRouter();
@@ -39,17 +40,17 @@ function AuthForm() {
         dispatch(loginAction(response.data.data));
         dispatch(
           showAlert({
-            message: "Login successful!",
+            message: response.data?.message || message.LOGIN_SUCCESS,
             type: ALERT_TYPE.SUCCESS,
-          })
+          }),
         );
         router.push("/home");
       } catch (error) {
         dispatch(
           showAlert({
-            message: error.response.data?.message || "Login failed",
+            message: error.response.data?.message || message.LOGIN_FAILED,
             type: ALERT_TYPE.ERROR,
-          })
+          }),
         );
       }
     } else {
@@ -57,18 +58,18 @@ function AuthForm() {
         const response = await signup(data.name, data.email, data.password);
         dispatch(
           showAlert({
-            message: response.data?.message || "Signup successful!",
+            message: response.data?.message || message.SIGNUP_SUCCESS,
             type: ALERT_TYPE.SUCCESS,
-          })
+          }),
         );
         setIsLogin(true);
         reset();
       } catch (error) {
         dispatch(
           showAlert({
-            message: error.response.data?.message || "Signup failed",
+            message: error.response.data?.message || message.SIGNUP_FAILED,
             type: ALERT_TYPE.ERROR,
-          })
+          }),
         );
       }
     }
@@ -119,8 +120,8 @@ function AuthForm() {
             <Button type="submit">{islogin ? "Login" : "Sign Up"}</Button>
             <p className="text-sm text-foreground">
               {islogin
-                ? "Don't have an account? "
-                : "Already have an account? "}
+                ? message.DONT_HAVE_ACCOUNT
+                : message.ALREADY_HAVE_ACCOUNT}
               <button
                 type="button"
                 className="text-blue-500 hover:underline"

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/common";
+import { message } from "@/constants/message.constant";
 
 function CommentEdit({
   editedComment,
@@ -11,7 +12,7 @@ function CommentEdit({
 
   const validate = () => {
     if (!editedComment) {
-      setError("Comment is required");
+      setError(message.COMMENT_REQUIRED);
       return false;
     }
     return true;
@@ -19,7 +20,7 @@ function CommentEdit({
 
   return (
     <div className="p-4">
-      <h3 className="text-lg font-semibold">Edit Comment</h3>
+      <h3 className="text-lg font-semibold">{message.EDIT_COMMENT}</h3>
       <textarea
         className={`w-full border p-2 mt-2 ${error && "border-red-500"}`}
         rows="3"

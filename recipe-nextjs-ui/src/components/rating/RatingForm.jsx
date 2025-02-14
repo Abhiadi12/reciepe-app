@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { Textarea, Card, Button } from "@/components/common";
 import Rating from "./Rating";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ function RatingForm({ userId, recipeId, existedRating, isEdit, setRefetch }) {
         showAlert({
           message: response.data?.message,
           type: ALERT_TYPE.SUCCESS,
-        })
+        }),
       );
       setRefetch((prev) => !prev);
     } catch (error) {
@@ -40,7 +40,7 @@ function RatingForm({ userId, recipeId, existedRating, isEdit, setRefetch }) {
         showAlert({
           message: error.response?.data?.message,
           type: ALERT_TYPE.ERROR,
-        })
+        }),
       );
     }
   };
@@ -81,4 +81,4 @@ function RatingForm({ userId, recipeId, existedRating, isEdit, setRefetch }) {
   );
 }
 
-export default RatingForm;
+export default memo(RatingForm);

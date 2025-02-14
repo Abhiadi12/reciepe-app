@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { useDispatch } from "react-redux";
 import useFetchIngredients from "@/hooks/useFetchIngredients";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -21,6 +21,7 @@ import {
 import { addRecipe, updateRecipe } from "@/services/recipe.service";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
+import { message } from "@/constants/message.constant";
 
 const AddRecipe = ({
   defaultValues,
@@ -70,7 +71,7 @@ const AddRecipe = ({
     if (!lastStep.trim()) {
       setError(`steps.${steps.length - 1}.value`, {
         type: "manual",
-        message: "Please fill in this step before adding a new one.",
+        message: message.STEP_ERROR,
       });
     } else {
       clearErrors("steps");
@@ -89,7 +90,7 @@ const AddRecipe = ({
     } else {
       setError("file", {
         type: "manual",
-        message: "Image is required",
+        message: message.IMAGE_REQUIRED,
       });
     }
   };
@@ -102,7 +103,7 @@ const AddRecipe = ({
       showAlert({
         message,
         type: ALERT_TYPE.SUCCESS,
-      })
+      }),
     );
   };
 
@@ -134,7 +135,7 @@ const AddRecipe = ({
             showAlert({
               message: error.response.data?.message,
               type: ALERT_TYPE.ERROR,
-            })
+            }),
           );
         });
       return;
@@ -148,7 +149,7 @@ const AddRecipe = ({
           showAlert({
             message: error.response.data?.message,
             type: ALERT_TYPE.ERROR,
-          })
+          }),
         );
       });
   };
@@ -163,7 +164,9 @@ const AddRecipe = ({
   return (
     <div>
       <form className="p-6" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-xl font-semibold mb-4">Create/Edit Recipe</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          {message.CREATE_EDIT_RECIPE}
+        </h2>
 
         {/* Title */}
         <div className="mb-4">
@@ -283,4 +286,4 @@ const AddRecipe = ({
   );
 };
 
-export default AddRecipe;
+export default memo(AddRecipe);

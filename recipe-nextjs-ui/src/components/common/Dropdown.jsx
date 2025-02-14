@@ -31,7 +31,7 @@ function Dropdown({
               id={name}
               onChange={(e) => {
                 field.onChange(e); // Update the form state
-                onChangeHandler(e.target.value); // Call the external handler
+                onChangeHandler(e.target.value);
               }}
               className={`block w-full p-2 border ${
                 error ? "border-destructive" : "border-input"
