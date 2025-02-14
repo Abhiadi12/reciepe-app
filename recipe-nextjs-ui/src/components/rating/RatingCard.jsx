@@ -1,7 +1,11 @@
+import dynamic from "next/dynamic";
 import React from "react";
-import DeleteRecipe from "@/components/recipe/DeleteRecipe";
 import { Card, Modal } from "@/components/common";
 import { getAverageRating } from "@/utils/getAverageRating";
+
+const DeleteRecipe = dynamic(() => import("@/components/recipe/DeleteRecipe"), {
+  ssr: false,
+});
 
 function RatingCard({ ratings, userId, onDelete }) {
   const [selectedRating, setSelectedRating] = React.useState(null);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { useDispatch } from "react-redux";
 import useFetchIngredients from "@/hooks/useFetchIngredients";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -286,4 +286,4 @@ const AddRecipe = ({
   );
 };
 
-export default AddRecipe;
+export default memo(AddRecipe);

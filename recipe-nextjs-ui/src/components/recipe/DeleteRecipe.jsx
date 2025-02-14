@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons/faTriangleExclamation";
 
@@ -28,4 +28,4 @@ function DeleteRecipe({
   );
 }
 
-export default DeleteRecipe;
+export default memo(DeleteRecipe);
