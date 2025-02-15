@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import Header from "@/components/header/Header";
-import Provider from "@/components/Provider/Provider";
+import Provider from "@/components/provider/Provider";
 import { Alert } from "@/components/common";
 import "./globals.css";
 
