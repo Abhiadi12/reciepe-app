@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { hideAlert } from "../../store/alertSlice";
@@ -18,7 +19,6 @@ function Alert() {
 
   if (!message) return null; // Do not render anything if there's no message
 
-  // Alert styles based on type
   const alertStyles = {
     success: "bg-green-500 text-white",
     error: "bg-red-500 text-white",
