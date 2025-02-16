@@ -30,6 +30,7 @@ const Input = ({
           )}
           <input
             id={id}
+            data-testid={id}
             type={type}
             placeholder={placeholder}
             className={`flex h-10 w-full rounded-md border focus:border-none ${
