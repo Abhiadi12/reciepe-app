@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "next/navigation";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ProductCard from "./ProductCard";
 import CommentBody from "@/components/comment/CommentBody";
@@ -9,6 +9,10 @@ import RatingBody from "@/components/rating/RatingBody";
 function ProductDetail() {
   const { id } = useParams();
   const { product } = useGetProductDetail(id);
+
+  if (!product) {
+    return null;
+  }
 
   return (
     <div className="mt-16">

@@ -7,6 +7,15 @@ const customJestConfig = {
   testEnvironment: "jsdom",
   moduleNameMapper: {
     "\\.(css|scss|sass)$": "identity-obj-proxy",
+
+    // Handle module aliases
+    "^@/components/(.*)$": "<rootDir>/src/components/$1",
+    "^@/mocks/(.*)$": "<rootDir>/src/mocks/$1",
+    "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",
+    "^@/constants/(.*)$": "<rootDir>/src/constants/$1",
+    "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
+    "^@/store/(.*)$": "<rootDir>/src/store/$1",
+    "^@/services/(.*)$": "<rootDir>/src/services/$1",
   },
   testPathIgnorePatterns: [
     "<rootDir>/src/app/", // Exclude app directory
