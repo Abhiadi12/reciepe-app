@@ -7,7 +7,7 @@
     "recipe-nextjs-ui"
   ],
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky install",
     "lint-next-frontend": "cd recipe-nextjs-ui && npm run lint",
     "build-next-frontend": "cd recipe-nextjs-ui && npm run build"
   },
