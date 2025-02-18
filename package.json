@@ -13,7 +13,7 @@
     "lint-next-staged": "cd recipe-nextjs-ui && npm run lint --no-fail-on-warnings && npm run build"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "recipe-nextjs-ui/**/*.{js,jsx,ts,tsx}": [
       "npm run lint-next-staged"
     ]
   },
