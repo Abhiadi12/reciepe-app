@@ -13,7 +13,15 @@ npm i
 npm run dev
 ```
 
-- frontend
+- frontend using react js
+
+```
+cd recipe-frontend
+npm i
+npm run dev
+```
+
+- frontend using next js
 
 ```
 cd recipe-frontend
