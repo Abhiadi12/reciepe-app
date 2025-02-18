@@ -42,6 +42,7 @@ const Modal = ({ modalOpen, setModalOpen, children, cstmStyle = "" }) => {
         <button
           onClick={() => setModalOpen(false)}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
+          data-testid="close-modal"
         >
           <svg
             className="w-6 h-6"

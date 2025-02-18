@@ -30,6 +30,7 @@ const Textarea = ({
           )}
           <textarea
             id={id}
+            data-testid={id}
             placeholder={placeholder}
             rows={rows}
             className={`flex w-full rounded-md border focus:border-none ${

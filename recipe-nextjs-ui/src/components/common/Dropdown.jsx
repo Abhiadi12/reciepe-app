@@ -11,7 +11,7 @@ function Dropdown({
   onChangeHandler,
 }) {
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full max-w-sm" data-testid="multiselect-container">
       {label && (
         <label
           htmlFor={name}
