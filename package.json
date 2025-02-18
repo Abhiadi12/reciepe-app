@@ -13,7 +13,8 @@
   },
   "lint-staged": {
     "recipe-nextjs-ui/**/*.{js,jsx,ts,tsx}": [
-      "cd recipe-nextjs-ui && npm run lint && npm run build"
+      "cd recipe-nextjs-ui && npm run lint",
+      "cd recipe-nextjs-ui && npm run build"
     ]
   },
   "keywords": [],
