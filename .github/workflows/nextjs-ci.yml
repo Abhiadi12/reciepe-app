@@ -36,4 +36,4 @@ jobs:
         working-directory: ./recipe-nextjs-ui
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: npx vercel --token ${VERCEL_TOKEN} --prod
+        run: npx vercel --token ${VERCEL_TOKEN} --prod --yes
