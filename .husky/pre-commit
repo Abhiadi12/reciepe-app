@@ -1,0 +1,2 @@
+echo "Current directory: $(pwd)"
+npx lint-staged

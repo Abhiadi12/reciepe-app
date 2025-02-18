@@ -7,13 +7,14 @@
     "recipe-nextjs-ui"
   ],
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky install",
     "lint-next-frontend": "cd recipe-nextjs-ui && npm run lint",
-    "build-next-frontend": "cd recipe-nextjs-ui && npm run build"
+    "build-next-frontend": "cd recipe-nextjs-ui && npm run build",
+    "lint-next-staged": "cd recipe-nextjs-ui && npm run lint --no-fail-on-warnings && npm run build"
   },
   "lint-staged": {
-    "recipe-nextjs-ui/**/*.{js,jsx,ts,tsx}": [
-      "cd recipe-nextjs-ui && npm run lint && npm run build"
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint-next-staged"
     ]
   },
   "keywords": [],

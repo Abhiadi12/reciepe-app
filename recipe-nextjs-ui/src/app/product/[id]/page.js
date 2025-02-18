@@ -1,4 +1,4 @@
-import ProductDetail from "@/components/productDetail/ProductDetailClient";
+import ProductDetail from "@/components/productDetail/ProductDetail";
 
 export const metadata = {
   title: "Product Detail Page",
