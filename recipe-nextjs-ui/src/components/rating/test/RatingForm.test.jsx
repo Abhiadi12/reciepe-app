@@ -66,7 +66,7 @@ describe("RatingForm Component", () => {
     useDispatch.mockReturnValue(mockDispatch);
     useForm.mockReturnValue({
       control: mockControl,
-      handleSubmit: (fn) => mockHandleSubmit,
+      handleSubmit: () => mockHandleSubmit,
       reset: mockReset,
     });
   });

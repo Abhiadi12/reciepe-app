@@ -5,9 +5,15 @@
   ],
   "plugins": ["prettier"],
   "rules": {
+    "react-hooks/exhaustive-deps": "warn",
     "no-console": "error",
     "no-unused-vars": "warn",
     "eqeqeq": "error",
     "no-await-in-loop": "error"
-  }
+  },
+  "ignorePatterns": [
+    "**/*.test.js",
+    "**/*.test.jsx",
+    "**/__tests__/**"
+  ]
 }

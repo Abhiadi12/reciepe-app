@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Rating from "../Rating";
 import CustomStar from "../CustomStar";
 
