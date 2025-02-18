@@ -21,7 +21,8 @@ const customJestConfig = {
     "<rootDir>/src/app/", // Exclude app directory
     "<rootDir>/src/store/", // Exclude store directory
     "<rootDir>/src/mocks/", // Exclude mocks directory
-    "<rootDir>/src/constants", // Exclude constants directory
+    "<rootDir>/src/constants", // Exclude constants directory,
+    "<rootDir>/src/hooks", // Exclude utils directory
   ],
 };
 
