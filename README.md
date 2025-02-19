@@ -24,10 +24,11 @@ npm run dev
 - frontend using next js
 
 ```
-cd recipe-frontend
+cd recipe-nextjs-ui
 npm i
 npm run dev
 ```
+deployment url: https://recipe-nextjs-3wx9tlx0t-abhisek12s-projects.vercel.app/
 
 ### Features
 
