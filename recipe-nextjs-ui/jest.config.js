@@ -23,6 +23,7 @@ const customJestConfig = {
     "<rootDir>/src/mocks/", // Exclude mocks directory
     "<rootDir>/src/constants", // Exclude constants directory,
     "<rootDir>/src/hooks", // Exclude utils directory
+    "<rootDir>/src/hoc", // Exclude hoc directory
   ],
 };
 
