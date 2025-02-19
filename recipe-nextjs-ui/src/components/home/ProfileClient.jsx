@@ -18,6 +18,7 @@ import { showAlert } from "@/store/alertSlice";
 import { deleteRecipe } from "@/services/recipe.service";
 import { ALERT_TYPE } from "@/constants/alert.constant";
 import ShimmerTable from "@/components/shimmer/ShimmerTable";
+import withAuth from "@/hoc/withAuth";
 
 function Profile() {
   const {
@@ -187,4 +188,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default withAuth(Profile);

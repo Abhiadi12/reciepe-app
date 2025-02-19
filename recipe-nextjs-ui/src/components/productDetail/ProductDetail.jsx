@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import CommentBody from "@/components/comment/CommentBody";
 import { Card } from "@/components/common";
 import RatingBody from "@/components/rating/RatingBody";
+import withAuth from "@/hoc/withAuth";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -34,4 +35,4 @@ function ProductDetail() {
   );
 }
 
-export default ProductDetail;
+export default withAuth(ProductDetail);

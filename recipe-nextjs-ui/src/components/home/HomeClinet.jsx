@@ -15,6 +15,7 @@ import {
 import usePagination from "@/hooks/usePagination";
 import Pagination from "@/components/common/Pagination";
 import ShimmerCard from "@/components/recipe/ShimmerCard";
+import withAuth from "@/hoc/withAuth";
 
 function Home() {
   const { loading, data } = useSelector((state) => state.filterRecipe);
@@ -35,7 +36,7 @@ function Home() {
     minPrepTime,
     maxPrepTime,
     ingredientIds,
-    fetchAll = false
+    fetchAll = false,
   ) => {
     if (!fetchAll) {
       setSkipEffect(true);
@@ -59,7 +60,7 @@ function Home() {
         pageSize,
         minPrepTime,
         maxPrepTime,
-        ingredientIds
+        ingredientIds,
       );
       handlePageChange(1);
       const { recipes, totalRecipes } = response.data?.data;
@@ -111,4 +112,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Home);
