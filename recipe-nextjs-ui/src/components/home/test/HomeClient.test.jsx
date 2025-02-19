@@ -11,6 +11,12 @@ import filterRecipeReducer from "@/store/filterRecipeSlice";
 import Home from "../HomeClinet";
 import { mockRecipesTwo } from "@/mocks/recipe.mock";
 
+// Mock withAuth HOC
+jest.mock("@/hoc/withAuth", () => ({
+  __esModule: true,
+  default: (Component) => Component,
+}));
+
 // Mock the service functions
 jest.mock("@/services/recipe.service", () => ({
   fetchAllRecipes: jest.fn(),
@@ -67,12 +73,22 @@ describe("Home Component", () => {
     store = configureStore({
       reducer: {
         filterRecipe: filterRecipeReducer,
+        // Add auth reducer mock if needed by withAuth
+        auth: () => ({
+          isAuthenticated: true,
+          user: { id: "123", name: "Test User" },
+        }),
       },
       preloadedState: {
         filterRecipe: {
           loading: false,
           data: [],
           error: null,
+        },
+        // Add auth state if needed by withAuth
+        auth: {
+          isAuthenticated: true,
+          user: { id: "123", name: "Test User" },
         },
       },
     });
@@ -94,6 +110,7 @@ describe("Home Component", () => {
     store = configureStore({
       reducer: {
         filterRecipe: filterRecipeReducer,
+        auth: () => ({ isAuthenticated: true, user: { id: "123" } }),
       },
       preloadedState: {
         filterRecipe: {
@@ -101,6 +118,7 @@ describe("Home Component", () => {
           data: [],
           error: null,
         },
+        auth: { isAuthenticated: true, user: { id: "123" } },
       },
     });
 

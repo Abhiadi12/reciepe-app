@@ -6,7 +6,7 @@
 
 export function getTableFields(data) {
   if (Array.isArray(data)) {
-    return data.map((item, itemIndex) => {
+    return data.map((item) => {
       return typeof item === "object" ? item.name : item;
     });
   }
