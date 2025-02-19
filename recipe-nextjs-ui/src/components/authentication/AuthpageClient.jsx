@@ -14,7 +14,6 @@ export default function AuthpageClient() {
       router.replace("/home");
     }
   }, [token, router]);
-  console.log("token", token);
   if (token) return <RedirectLoader />;
 
   return <AuthForm />;
