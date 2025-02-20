@@ -28,7 +28,7 @@ cd recipe-nextjs-ui
 npm i
 npm run dev
 ```
-deployment url: https://recipe-nextjs-3wx9tlx0t-abhisek12s-projects.vercel.app/
+deployment url: https://recipe-nextjs-ui.vercel.app/
 
 ### Features
 
