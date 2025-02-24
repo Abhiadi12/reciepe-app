@@ -22,6 +22,7 @@ import { addRecipe, updateRecipe } from "@/services/recipe.service";
 import { showAlert } from "@/store/alertSlice";
 import { ALERT_TYPE } from "@/constants/alert.constant";
 import { message } from "@/constants/message.constant";
+import Image from "next/image";
 
 const AddRecipe = ({
   defaultValues,
@@ -267,11 +268,14 @@ const AddRecipe = ({
 
           {/* Image Preview */}
           {previewImage && (
-            <img
-              src={previewImage}
-              alt="Recipe Preview"
-              className="mt-2 w-full h-40 object-cover rounded-md"
-            />
+            <div className="relative mt-2 w-full h-40">
+              <Image
+                src={previewImage}
+                alt="Recipe Preview"
+                fill
+                className="object-cover rounded-md"
+              />
+            </div>
           )}
 
           {/* ex */}
