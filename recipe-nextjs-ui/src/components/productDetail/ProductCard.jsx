@@ -1,12 +1,15 @@
+import Image from "next/image";
 import React from "react";
 
 const ProductCard = ({ recipe }) => {
   return (
     <div className="bg-card p-4 w-full">
       {/* Recipe Image */}
-      <img
+      <Image
         src={recipe?.image?.url}
         alt={recipe?.title}
+        width={800}
+        height={450}
         className="w-full h-[50vh]  rounded-lg aspect-video"
       />
 

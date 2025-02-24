@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Card } from "@/components/common";
 
 function RecipeCard({
@@ -14,10 +15,13 @@ function RecipeCard({
   return (
     <Card className="overflow-hidden transition-transform duration-200 hover:scale-105 shadow-lg rounded-lg">
       <Link href={`/product/${id}`} className="block relative">
-        <img
-          className="rounded-t-lg w-full aspect-video object-cover"
+        <Image
           src={imageUrl}
           alt={title}
+          width={800}
+          height={450}
+          className="rounded-t-lg w-full aspect-video object-cover"
+          priority
         />
       </Link>
 
